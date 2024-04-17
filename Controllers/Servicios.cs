@@ -29,6 +29,20 @@ namespace SamartTradeBackend.Controllers
             return "BD iniciada";
         }
 
+        [HttpGet("Todo")]
+        public string GetTodo()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.Todo());
+            return respuesta;
+        }
+
+        [HttpGet("TodoValoracion")]
+        public string GetTodoValoracion()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.TodoValoracion());
+            return respuesta;
+        }
+
         [HttpGet("Buscador/{nombre}")]
         public string GetBuscador(string nombre)
         {
@@ -50,11 +64,34 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
+        [HttpGet("CompradosIronman")]
+        public string GetCompradosIronman()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.CompradosPorIronman());
+            return respuesta;
+        }
+
         [HttpPost("CrearProducto/{tipo}")]
         public string PostCrearProducto(Producto prod, string tipo)
         {
             servicio.AgregarProductoDirecto(prod, tipo);
             return "Producto Añadido";
         }
+
+        [HttpGet("BuscarPorId/{id}")]
+        public string GetBuscarPorId(int id)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.ProductoPorId(id));
+            return respuesta;
+        }
+
+        [HttpPost("AgregarValoracion/{valor}")]
+        public string PostAgregarValoracion(Producto p, int valor)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.AgregarValoracion(p, valor));
+            return respuesta;
+        }
+
+
     }
 }

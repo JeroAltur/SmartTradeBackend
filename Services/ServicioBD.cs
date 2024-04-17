@@ -14,7 +14,7 @@ namespace SmartTradeBackend.Services
         public ServicioBD(string dbPath)
         {
             _conexion = new SQLiteConnection(dbPath);
-            //_conexion.CreateTable<Valoracion>();
+            _conexion.CreateTable<Valoracion>();
             _conexion.CreateTable<Producto>();
             _conexion.CreateTable<Electronica>();
             _conexion.CreateTable<Comida>();
@@ -41,9 +41,9 @@ namespace SmartTradeBackend.Services
             return _conexion.Table<T>().ToList();
         }
 
-        public List<T> TodoOrdenado<T, U>(string orderByColumn) where T : new()
+        public T BuscarPorId<T>(int id) where T : class, new()
         {
-            return _conexion.Table<T>().OrderBy<T, U>(x => (U)x.GetType().GetProperty(orderByColumn).GetValue(x)).ToList();
+            return _conexion.Find<T>(id);
         }
 
         public void BorrarTodo()
@@ -52,11 +52,7 @@ namespace SmartTradeBackend.Services
             Limpiar<Comida>();
             Limpiar<Ropa>();
             Limpiar<Electronica>();
-        }
-
-        public T BuscarPorID<T>(int id) where T : class, new()
-        {
-            return _conexion.Find<T>(id);
+            Limpiar<Valoracion>();
         }
 
         public void Actualizar<T>(T entity) where T : class

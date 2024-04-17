@@ -12,6 +12,37 @@ namespace SmartTradeBackend.Services
             this.bd = servicio;
         }
 
+        public List<Producto> Todo()
+        {
+            List<Comida> comida = bd.Todo<Comida>().ToList();
+            List<Electronica> electronica = bd.Todo<Electronica>().ToList();
+            List<Ropa> ropa = bd.Todo<Ropa>().ToList();
+            List<Producto> resultadoProvicional = new List<Producto>();
+
+            foreach (Comida p in comida)
+            {
+                resultadoProvicional.Add(p);
+            }
+            foreach (Electronica p in electronica)
+            {
+                resultadoProvicional.Add(p);
+            }
+            foreach (Ropa p in ropa)
+            {
+                resultadoProvicional.Add(p);
+
+            }
+            List<Producto> result = resultadoProvicional;
+            return result;
+        }
+
+        public List<Valoracion> TodoValoracion()
+        {
+            List<Valoracion> result = bd.Todo<Valoracion>().ToList();
+            
+            return result;
+        }
+
         public List<Producto> Tendencias()
         {
             List<Comida> comida = bd.Todo<Comida>().ToList();
@@ -42,8 +73,18 @@ namespace SmartTradeBackend.Services
         public Producto ProductoPorId(int id)
         {
             Producto producto = new Producto();
-            producto = bd.BuscarPorID<Producto>(id);
+            producto = bd.BuscarPorId<Producto>(id);
+            if (producto == null ) { producto = bd.BuscarPorId<Electronica>(id); }
+            if (producto == null) { producto = bd.BuscarPorId<Comida>(id); }
+            if (producto == null) { producto = bd.BuscarPorId<Ropa>(id); }
             return producto;
+        }
+
+        public Valoracion ValoracionPorId(int id)
+        {
+            Valoracion valoracion = new Valoracion();
+            valoracion = bd.BuscarPorId<Valoracion>(id);
+            return valoracion;
         }
 
         public List<Producto> MejorValorado()
@@ -148,6 +189,12 @@ namespace SmartTradeBackend.Services
         public void EliminarListaDeseos(ListaDeseos ld, Producto p)
         {
             ld.eliminarProducto(p, bd);
+        }
+
+        public Producto AgregarValoracion(Producto p, int v)
+        {
+            p.ValoracionNueva(v, bd);
+            return p;
         }
 
         public List<Producto> CompradosPorIronman()

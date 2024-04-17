@@ -24,6 +24,7 @@ namespace SmartTrade.Services
 
             // Ruta completa de la base de datos
             string fullPath = Path.Combine(dataFolderPath, dbName);
+            Console.WriteLine("La ruta de la base de datos es: " + fullPath);
             return fullPath;
         }
     }

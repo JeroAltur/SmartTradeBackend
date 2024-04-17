@@ -12,6 +12,10 @@ namespace SmartTradeBackend.Models
         public void crearProducto(string tipo, Producto p)
         {
 
+            Valoracion valoracion = new Valoracion(p);
+            bd.Insertar(valoracion);
+            p.id_valoracion = valoracion.idValoracion;
+
             if (tipo == "ropa")
             {
                 Ropa nuevoProducto = null;
@@ -32,6 +36,6 @@ namespace SmartTradeBackend.Models
             }
         }
 
-        public FabricaProducto() { }
+        //public FabricaProducto() { }
     }
 }
