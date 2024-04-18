@@ -60,6 +60,15 @@ namespace SmartTradeBackend.Services
             _conexion.Update(entity);
         }
 
+        public void BorrarTablas()
+        {
+            _conexion.Execute("DROP TABLE IF EXISTS Valoracion;");
+            _conexion.Execute("DROP TABLE IF EXISTS Producto;");
+            _conexion.Execute("DROP TABLE IF EXISTS Electronica;");
+            _conexion.Execute("DROP TABLE IF EXISTS Comida;");
+            _conexion.Execute("DROP TABLE IF EXISTS Ropa;");
+        }
+
         public void Dispose()
         {
             _conexion.Close();

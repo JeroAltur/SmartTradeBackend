@@ -18,21 +18,21 @@ namespace SmartTradeBackend.Models
 
             if (tipo == "ropa")
             {
-                Ropa nuevoProducto = null;
-                nuevoProducto = new Ropa(p);
+                Ropa nuevoProducto = new Ropa(p);
                 bd.Insertar(nuevoProducto);
+                bd.Insertar(p);
             }
             if (tipo == "comida")
             {
-                Comida nuevoProducto = null;
-                nuevoProducto = new Comida(p);
+                Comida nuevoProducto = new Comida(p);
                 bd.Insertar(nuevoProducto);
+                bd.Insertar(p);
             }
             if (tipo == "electronica")
             {
-                Electronica nuevoProducto = null;
-                nuevoProducto = new Electronica(p);
+                Electronica nuevoProducto = new Electronica(p);
                 bd.Insertar(nuevoProducto);
+                bd.Insertar(p);
             }
         }
 

@@ -22,6 +22,13 @@ namespace SamartTradeBackend.Controllers
             servicio = new SmartTradeServices(servicioBD);
         }
 
+        [HttpGet("BorrarTablas")]
+        public string GetBorrarTablas()
+        {
+            servicio.Borrar();
+            return "BD borrada";
+        }
+
         [HttpPost("IniciarBD")]
         public string PostIniciarBD()
         {
@@ -72,9 +79,9 @@ namespace SamartTradeBackend.Controllers
         }
 
         [HttpPost("CrearProducto/{tipo}")]
-        public string PostCrearProducto(Producto prod, string tipo)
+        public string PostCrearProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
-            servicio.AgregarProductoDirecto(prod, tipo);
+            servicio.AgregarProducto(name, description, price, imagenes, huella, tipo);
             return "Producto Añadido";
         }
 
@@ -85,9 +92,10 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
-        [HttpPost("AgregarValoracion/{valor}")]
-        public string PostAgregarValoracion(Producto p, int valor)
+        [HttpPost("AgregarValoracion/{id}/{valor}")]
+        public string PostAgregarValoracion(int id, int valor)
         {
+            Producto p = servicio.ProductoPorId(id);
             string respuesta = JsonConvert.SerializeObject(servicio.AgregarValoracion(p, valor));
             return respuesta;
         }

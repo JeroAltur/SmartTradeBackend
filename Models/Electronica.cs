@@ -1,19 +1,17 @@
-﻿namespace SmartTradeBackend.Models
+﻿using SQLite;
+
+namespace SmartTradeBackend.Models
 {
-    internal class Electronica : Producto
+    internal class Electronica
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public int id_Prod { get; set; }
+
         public Electronica() { }
         public Electronica(Producto p)
         {
-            this.idProducto = p.idProducto;
-            this.nombre = p.nombre;
-            this.descripcion = p.descripcion;
-            this.precio = p.precio;
-            this.imagenes = p.imagenes;
-            this.HuellaAmbiental = p.HuellaAmbiental;
-            this.id_valoracion = p.id_valoracion;
-            this.valor = p.valor;
-            this.ventas = p.ventas;
+            this.id_Prod = p.idProducto;
         }
     }
 }

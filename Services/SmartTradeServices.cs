@@ -12,27 +12,15 @@ namespace SmartTradeBackend.Services
             this.bd = servicio;
         }
 
+        public void Borrar()
+        {
+            bd.BorrarTablas();
+        }
+
         public List<Producto> Todo()
         {
-            List<Comida> comida = bd.Todo<Comida>().ToList();
-            List<Electronica> electronica = bd.Todo<Electronica>().ToList();
-            List<Ropa> ropa = bd.Todo<Ropa>().ToList();
-            List<Producto> resultadoProvicional = new List<Producto>();
-
-            foreach (Comida p in comida)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Electronica p in electronica)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Ropa p in ropa)
-            {
-                resultadoProvicional.Add(p);
-
-            }
-            List<Producto> result = resultadoProvicional;
+            List<Producto> result = bd.Todo<Producto>().ToList();
+            
             return result;
         }
 
@@ -45,95 +33,24 @@ namespace SmartTradeBackend.Services
 
         public List<Producto> Tendencias()
         {
-            List<Comida> comida = bd.Todo<Comida>().ToList();
-            List<Electronica> electronica = bd.Todo<Electronica>().ToList();
-            List<Ropa> ropa = bd.Todo<Ropa>().ToList();
-            List<Producto> resultadoProvicional = new List<Producto>();
+            List<Producto> resultadoProvicional = bd.Todo<Producto>().ToList();
 
-            foreach (Comida p in comida)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Electronica p in electronica)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Ropa p in ropa)
-            {
-                resultadoProvicional.Add(p);
-
-            }
-
-
-            resultadoProvicional = resultadoProvicional.OrderByDescending(p => p.ventas).ToList();
-            List<Producto> result = resultadoProvicional.Take(8).ToList();
+            List<Producto> result = resultadoProvicional.OrderByDescending(p => p.ventas).Take(8).ToList();
             return result;
-        }
-
-        public Producto ProductoPorId(int id)
-        {
-            Producto producto = new Producto();
-            producto = bd.BuscarPorId<Producto>(id);
-            if (producto == null ) { producto = bd.BuscarPorId<Electronica>(id); }
-            if (producto == null) { producto = bd.BuscarPorId<Comida>(id); }
-            if (producto == null) { producto = bd.BuscarPorId<Ropa>(id); }
-            return producto;
-        }
-
-        public Valoracion ValoracionPorId(int id)
-        {
-            Valoracion valoracion = new Valoracion();
-            valoracion = bd.BuscarPorId<Valoracion>(id);
-            return valoracion;
         }
 
         public List<Producto> MejorValorado()
         {
-            List<Comida> comida = bd.Todo<Comida>().ToList();
-            List<Electronica> electronica = bd.Todo<Electronica>().ToList();
-            List<Ropa> ropa = bd.Todo<Ropa>().ToList();
-            List<Producto> resultadoProvicional = new List<Producto>();
+            List<Producto> resultadoProvicional = bd.Todo<Producto>().ToList();
 
-            foreach (Comida p in comida)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Electronica p in electronica)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Ropa p in ropa)
-            {
-                resultadoProvicional.Add(p);
-
-            }
-
-
-           resultadoProvicional = resultadoProvicional.OrderByDescending(p => p.valor).ToList();
-           List<Producto> result = resultadoProvicional.Take(8).ToList();
-           return result;
+            List<Producto> result = resultadoProvicional.OrderByDescending(p => p.valor).Take(8).ToList();
+            return result;
         }
 
         public List<Producto> Buscador(String valor)
         {
-            List<Comida> comida = bd.Todo<Comida>().ToList();
-            List<Electronica> electronica = bd.Todo<Electronica>().ToList();
-            List<Ropa> ropa = bd.Todo<Ropa>().ToList();
-            List<Producto> resultadoProvicional = new List<Producto>();
+            List<Producto> resultadoProvicional = bd.Todo<Producto>().ToList();
             List<Producto> result = new List<Producto>();
-
-            foreach (Comida p in comida)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Electronica p in electronica)
-            {
-                resultadoProvicional.Add(p);
-            }
-            foreach (Ropa p in ropa)
-            {
-                resultadoProvicional.Add(p);
-            }
 
             foreach (Producto p in resultadoProvicional)
             {
@@ -158,6 +75,20 @@ namespace SmartTradeBackend.Services
             }
 
             return ProductosDeseados;
+        }
+
+        public Producto ProductoPorId(int id)
+        {
+            Producto producto = new Producto();
+            producto = bd.BuscarPorId<Producto>(id);
+            return producto;
+        }
+
+        public Valoracion ValoracionPorId(int id)
+        {
+            Valoracion valoracion = new Valoracion();
+            valoracion = bd.BuscarPorId<Valoracion>(id);
+            return valoracion;
         }
 
 
