@@ -1,11 +1,10 @@
 ﻿using SmartTradeBackend.Services;
-using SQLite;
+using Dapper;
 
 namespace SmartTradeBackend.Models
 {
     public class Valoracion
     {
-        [PrimaryKey, AutoIncrement]
         public int idValoracion { get; set; }
         public double valoraciones { get; set; }
         public double total { get; set; }
@@ -33,3 +32,4 @@ namespace SmartTradeBackend.Models
         }
     }
 }
+

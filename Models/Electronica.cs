@@ -1,10 +1,10 @@
-﻿using SQLite;
+﻿using SmartTradeBackend.Services;
+using Dapper;
 
 namespace SmartTradeBackend.Models
 {
-    internal class Electronica
+    public class Electronica
     {
-        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public int id_Prod { get; set; }
 

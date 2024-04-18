@@ -1,11 +1,10 @@
 ﻿using SmartTradeBackend.Services;
-using SQLite;
+using Dapper;
 
 namespace SmartTradeBackend.Models
 {
     public class Producto
     {
-        [PrimaryKey, AutoIncrement]
         public int idProducto { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
@@ -13,8 +12,7 @@ namespace SmartTradeBackend.Models
         public string imagenes { get; set; }
         public double HuellaAmbiental { get; set; }
         public int id_valoracion { get; set; }
-        public double valor {  get; set; }
-
+        public double valor { get; set; }
         public int ventas { get; set; }
 
         public Producto()
@@ -48,7 +46,5 @@ namespace SmartTradeBackend.Models
             valor = valoracion.valor;
             servicio.Actualizar(this);
         }
-
     }
-
 }

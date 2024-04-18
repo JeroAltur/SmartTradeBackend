@@ -17,6 +17,11 @@ namespace SmartTradeBackend.Services
             bd.BorrarTablas();
         }
 
+        public void Crear()
+        {
+            bd.CrearTablas();
+        }
+
         public List<Producto> Todo()
         {
             List<Producto> result = bd.Todo<Producto>().ToList();
@@ -158,7 +163,7 @@ namespace SmartTradeBackend.Services
 
         public void IniciarBD()
         {
-            bd.BorrarTodo();
+            //bd.BorrarTodo();
 
             Producto p1 = new Producto("teclado", "teclado con pad numerico", 20, "../Resources/Imgages/teclado.png", 0);
             AgregarProductoDirecto(p1, "electronica");

@@ -1,12 +1,12 @@
-﻿using SQLite;
+﻿using SmartTradeBackend.Services;
+using Dapper;
 
 namespace SmartTradeBackend.Models
 {
-    internal class Ropa
+    public class Ropa
     {
-        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int id_Prod {  get; set; }
+        public int id_Prod { get; set; }
 
         public Ropa() { }
         public Ropa(Producto p)

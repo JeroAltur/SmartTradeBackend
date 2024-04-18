@@ -4,7 +4,6 @@ namespace SamartTradeBackend
 {
     public class Conexion
     {
-        private MySqlConnection conexion;
         private string server = "bezz64pmlgkdtkejch0i-mysql.services.clever-cloud.com";
         private string database = "bezz64pmlgkdtkejch0i";
         private string user = "uxri6to3ohabhczv";
@@ -19,19 +18,7 @@ namespace SamartTradeBackend
 
         public MySqlConnection GetConexion()
         {
-            if (conexion == null)
-            {
-                conexion = new MySqlConnection(cadenaConexion);
-                try
-                {
-                    conexion.Open();
-                }
-                catch (MySqlException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-            return conexion;
+            return new MySqlConnection(cadenaConexion);
         }
     }
 }

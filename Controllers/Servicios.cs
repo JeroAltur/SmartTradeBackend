@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using SmartTrade.Services;
 using SmartTradeBackend.Models;
 using SmartTradeBackend.Services;
-using static SamartTradeBackend.Controllers.HolaMundo;
+using SamartTradeBackend;
 
 namespace SamartTradeBackend.Controllers
 {
@@ -11,19 +11,25 @@ namespace SamartTradeBackend.Controllers
     [Route("[controller]")]
     public class Servicios : ControllerBase
     {
-        private readonly string dbPath;
+        Conexion conexion = new Conexion();
         private readonly ServicioBD servicioBD;
         private readonly SmartTradeServices servicio;
 
         public Servicios()
         {
-            dbPath = InicializacionServicioBD.GetDatabasePath();
-            servicioBD = new ServicioBD(dbPath);
+            servicioBD = new ServicioBD(conexion.GetConexion());
             servicio = new SmartTradeServices(servicioBD);
         }
 
         [HttpGet("BorrarTablas")]
         public string GetBorrarTablas()
+        {
+            servicio.Borrar();
+            return "BD borrada";
+        }
+
+        [HttpGet("CrearTablas")]
+        public string Crear()
         {
             servicio.Borrar();
             return "BD borrada";

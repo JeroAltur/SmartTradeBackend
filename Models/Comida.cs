@@ -1,10 +1,10 @@
-﻿using SQLite;
+﻿using SmartTradeBackend.Services;
+using Dapper;
 
 namespace SmartTradeBackend.Models
 {
-    internal class Comida
+    public class Comida
     {
-        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public int id_Prod { get; set; }
 
