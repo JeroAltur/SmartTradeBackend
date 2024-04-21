@@ -14,7 +14,9 @@ namespace SmartTradeBackend.Models
 
             Valoracion valoracion = new Valoracion(p);
             bd.Insertar(valoracion);
-            p.id_valoracion = valoracion.idValoracion;
+            int id = bd.IdValoracion(p.idProducto);
+            Console.WriteLine(id);
+            p.id_valoracion = id;
 
             if (tipo == "ropa")
             {

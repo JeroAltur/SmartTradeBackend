@@ -42,7 +42,7 @@ namespace SmartTradeBackend.Services
             precio DOUBLE,
             imagenes TEXT,
             HuellaAmbiental DOUBLE,
-            id_valoracion INT,
+            id_valoracion INT DEFAULT 0,
             valor DOUBLE,
             ventas INT,
             FOREIGN KEY (id_valoracion) REFERENCES Valoracions(idValoracion)
@@ -119,6 +119,13 @@ namespace SmartTradeBackend.Services
         {
             _conexion.Close();
             _conexion.Dispose();
+        }
+
+        public int IdValoracion(int idprod)
+        {
+            return _conexion.Execute(
+                "SELECT idValoracion FROM Valoracions WHERE id_prod = " + idprod
+                );
         }
     }
 }
