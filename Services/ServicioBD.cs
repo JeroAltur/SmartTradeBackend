@@ -61,15 +61,15 @@ namespace SmartTradeBackend.Services
     ");
         }
 
-        public void Insertar<T>(T entity) where T : class
+        public int Insertar<T>(T entity) where T : class
         {
             var tableName = typeof(T).Name;
             var properties = typeof(T).GetProperties();
             var columnNames = string.Join(", ", properties.Select(p => p.Name));
             var valuePlaceholders = string.Join(", ", properties.Select(p => $"@{p.Name}"));
 
-            var query = $"INSERT INTO {tableName} ({columnNames}) VALUES ({valuePlaceholders})";
-            ExecuteNonQuery(query, entity);
+            var query = $"INSERT INTO {tableName} ({columnNames}) VALUES ({valuePlaceholders}); SELECT LAST_INSERT_ID()";
+            return _conexion.ExecuteScalar<int>(query, entity);
         }
 
         public void Borrar<T>(T entity, string id) where T : class

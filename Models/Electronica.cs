@@ -9,9 +9,9 @@ namespace SmartTradeBackend.Models
         public int id_Prod { get; set; }
 
         public Electronica() { }
-        public Electronica(Producto p)
+        public Electronica(int idprod)
         {
-            this.id_Prod = p.idProducto;
+            this.id_Prod = idprod;
         }
     }
 }

@@ -11,28 +11,27 @@ namespace SmartTradeBackend.Models
         }
         public void crearProducto(string tipo, Producto p)
         {
-
             Valoracion valoracion = new Valoracion();
-            bd.Insertar(valoracion);
+            int idValoracion = bd.Insertar(valoracion);
             Console.WriteLine(valoracion.idValoracion);
-            p.id_valoracion = valoracion.idValoracion;
+            p.id_valoracion = idValoracion;
 
             if (tipo == "ropa")
             {
-                Ropa nuevoProducto = new Ropa(p);
-                bd.Insertar(p);
+                int idprod = bd.Insertar(p);
+                Ropa nuevoProducto = new Ropa(idprod);
                 bd.Insertar(nuevoProducto);
             }
             if (tipo == "comida")
             {
-                Comida nuevoProducto = new Comida(p);
-                bd.Insertar(p);
+                int idprod = bd.Insertar(p);
+                Ropa nuevoProducto = new Ropa(idprod);
                 bd.Insertar(nuevoProducto);
             }
             if (tipo == "electronica")
             {
-                Electronica nuevoProducto = new Electronica(p);
-                bd.Insertar(p);
+                int idprod = bd.Insertar(p);
+                Ropa nuevoProducto = new Ropa(idprod);
                 bd.Insertar(nuevoProducto);
             }
         }

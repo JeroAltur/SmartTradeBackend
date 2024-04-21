@@ -10,9 +10,9 @@ namespace SmartTradeBackend.Models
 
         public Comida() { }
 
-        public Comida(Producto p)
+        public Comida(int idprod)
         {
-            this.id_Prod = p.idProducto;
+            this.id_Prod = idprod;
         }
     }
 }
