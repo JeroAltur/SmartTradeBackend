@@ -1,4 +1,5 @@
 @SamartTradeBackend_HostAddress = http://localhost:5143
+@SamartTradeBackend_HostAddress = http://16.16.179.81:5143
 
 GET {{SamartTradeBackend_HostAddress}}/weatherforecast/
 Accept: application/json
