@@ -21,14 +21,14 @@ namespace SmartTradeBackend.Models
         public void añadirProducto(Producto p, ServicioBD servicio)
         {
             prod.Add(p);
-            servicio.Actualizar<ListaDeseos>(this);
+            servicio.Actualizar<ListaDeseos>(this, "idListaDeseos");
 
         }
 
         public void eliminarProducto(Producto p, ServicioBD servicio)
         {
             prod.Remove(p);
-            servicio.Actualizar<ListaDeseos>(this);
+            servicio.Actualizar<ListaDeseos>(this, "idListaDeseos");
         }
     }
 }

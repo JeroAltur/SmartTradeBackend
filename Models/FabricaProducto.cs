@@ -12,11 +12,10 @@ namespace SmartTradeBackend.Models
         public void crearProducto(string tipo, Producto p)
         {
 
-            Valoracion valoracion = new Valoracion(p);
+            Valoracion valoracion = new Valoracion();
             bd.Insertar(valoracion);
-            int id = bd.IdValoracion(p.idProducto);
-            Console.WriteLine(id);
-            p.id_valoracion = id;
+            Console.WriteLine(valoracion.idValoracion);
+            p.id_valoracion = valoracion.idValoracion;
 
             if (tipo == "ropa")
             {

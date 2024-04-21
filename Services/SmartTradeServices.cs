@@ -12,11 +12,6 @@ namespace SmartTradeBackend.Services
             this.bd = servicio;
         }
 
-        public void Borrar()
-        {
-            bd.BorrarTablas();
-        }
-
         public void Crear()
         {
             bd.CrearTablas();
@@ -85,14 +80,14 @@ namespace SmartTradeBackend.Services
         public Producto ProductoPorId(int id)
         {
             Producto producto = new Producto();
-            producto = bd.BuscarPorId<Producto>(id);
+            producto = bd.BuscarPorIdProducto<Producto>(id);
             return producto;
         }
 
         public Valoracion ValoracionPorId(int id)
         {
             Valoracion valoracion = new Valoracion();
-            valoracion = bd.BuscarPorId<Valoracion>(id);
+            valoracion = bd.BuscarPorIdValoracion<Valoracion>(id);
             return valoracion;
         }
 

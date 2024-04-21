@@ -36,15 +36,15 @@ namespace SmartTradeBackend.Models
         public void venta(ServicioBD servicio)
         {
             this.ventas++;
-            servicio.Actualizar(this);
+            servicio.Actualizar(this, "idProducto");
         }
 
         public void ValoracionNueva(double v, ServicioBD servicio)
         {
-            Valoracion valoracion = servicio.BuscarPorId<Valoracion>(id_valoracion);
+            Valoracion valoracion = servicio.BuscarPorIdValoracion<Valoracion>(id_valoracion);
             valoracion.valoracionNueva(v, servicio);
             valor = valoracion.valor;
-            servicio.Actualizar(this);
+            servicio.Actualizar(this, "idProducto");
         }
     }
 }

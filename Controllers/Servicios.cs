@@ -24,15 +24,15 @@ namespace SamartTradeBackend.Controllers
         [HttpGet("BorrarTablas")]
         public string GetBorrarTablas()
         {
-            servicio.Borrar();
+            //servicio.Borrar();
             return "BD borrada";
         }
 
         [HttpGet("CrearTablas")]
         public string Crear()
         {
-            servicio.Borrar();
-            return "BD borrada";
+            servicio.Crear();
+            return "BD Creada";
         }
 
         [HttpPost("IniciarBD")]
