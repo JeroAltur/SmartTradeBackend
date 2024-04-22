@@ -1,4 +1,6 @@
-﻿using SmartTradeBackend.Models;
+﻿using SamartTradeBackend.Models.ListaDeseos;
+using SamartTradeBackend.Models.Productos;
+using SmartTradeBackend.Models;
 using System.Resources;
 
 namespace SmartTradeBackend.Services

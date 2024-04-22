@@ -1,7 +1,7 @@
 ﻿using SmartTradeBackend.Services;
 using Dapper;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models.Productos
 {
     public class Comida
     {
@@ -12,7 +12,7 @@ namespace SmartTradeBackend.Models
 
         public Comida(int idprod)
         {
-            this.id_Prod = idprod;
+            id_Prod = idprod;
         }
     }
 }

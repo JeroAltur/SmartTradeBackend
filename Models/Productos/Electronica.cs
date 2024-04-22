@@ -1,7 +1,7 @@
 ﻿using SmartTradeBackend.Services;
 using Dapper;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models.Productos
 {
     public class Electronica
     {
@@ -11,7 +11,7 @@ namespace SmartTradeBackend.Models
         public Electronica() { }
         public Electronica(int idprod)
         {
-            this.id_Prod = idprod;
+            id_Prod = idprod;
         }
     }
 }

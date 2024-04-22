@@ -1,16 +1,17 @@
 ﻿using SamartTradeBackend.Models.Productos;
+using SamartTradeBackend.Models.Usuarios;
 using SmartTradeBackend.Services;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models
 {
-    internal class FabricaProducto
+    public class FabricaUsuario
     {
         private readonly ServicioBD bd;
-        public FabricaProducto(ServicioBD servicio)
+        public FabricaUsuario(ServicioBD servicio)
         {
             bd = servicio;
         }
-        public void crearProducto(string tipo, Producto p)
+        public void crearProducto(string tipo, Usuario u)
         {
             Valoracion valoracion = new Valoracion();
             int idValoracion = bd.Insertar(valoracion);
@@ -36,7 +37,5 @@ namespace SmartTradeBackend.Models
                 bd.Insertar(nuevoProducto);
             }
         }
-
-        //public FabricaProducto() { }
     }
 }

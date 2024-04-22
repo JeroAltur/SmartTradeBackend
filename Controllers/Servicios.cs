@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SmartTrade.Services;
-using SmartTradeBackend.Models;
 using SmartTradeBackend.Services;
 using SamartTradeBackend;
+using SamartTradeBackend.Models.Productos;
 
 namespace SamartTradeBackend.Controllers
 {

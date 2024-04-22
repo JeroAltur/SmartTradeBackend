@@ -1,7 +1,7 @@
 ﻿using SmartTradeBackend.Services;
 using Dapper;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models.Productos
 {
     public class Producto
     {
@@ -30,12 +30,12 @@ namespace SmartTradeBackend.Models
             this.descripcion = descripcion;
             this.precio = precio;
             this.imagenes = imagenes;
-            this.HuellaAmbiental = huellaAmbiental;
+            HuellaAmbiental = huellaAmbiental;
         }
 
         public void venta(ServicioBD servicio)
         {
-            this.ventas++;
+            ventas++;
             servicio.Actualizar(this, "idProducto");
         }
 

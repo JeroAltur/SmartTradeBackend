@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Dapper;
-using SmartTradeBackend.Models;
 using System.Data;
 using Dapper.Contrib.Extensions;
+using SamartTradeBackend.Models.Productos;
 
 namespace SmartTradeBackend.Services
 {

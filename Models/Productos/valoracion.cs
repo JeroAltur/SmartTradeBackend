@@ -1,7 +1,7 @@
 ﻿using SmartTradeBackend.Services;
 using Dapper;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models.Productos
 {
     public class Valoracion
     {
@@ -12,16 +12,16 @@ namespace SmartTradeBackend.Models
 
         public Valoracion()
         {
-            this.valor = 0;
-            this.valoraciones = 0;
-            this.total = 0;
+            valor = 0;
+            valoraciones = 0;
+            total = 0;
         }
 
         public void valoracionNueva(double v, ServicioBD servicio)
         {
-            this.valoraciones++;
-            this.total += v;
-            this.valor = this.total / this.valoraciones;
+            valoraciones++;
+            total += v;
+            valor = total / valoraciones;
             servicio.Actualizar(this, "idValoracion");
         }
     }

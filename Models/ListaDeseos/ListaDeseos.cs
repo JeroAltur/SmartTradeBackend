@@ -1,12 +1,13 @@
-﻿using SmartTradeBackend.Services;
+﻿using SamartTradeBackend.Models.Productos;
+using SmartTradeBackend.Services;
 using SQLite;
 
-namespace SmartTradeBackend.Models
+namespace SamartTradeBackend.Models.ListaDeseos
 {
     internal class ListaDeseos
     {
         [PrimaryKey, AutoIncrement]
-        public int idDeseos {  get; set; }
+        public int idDeseos { get; set; }
         public List<Producto> prod { get; set; }
         public ListaDeseos()
         {
@@ -21,14 +22,14 @@ namespace SmartTradeBackend.Models
         public void añadirProducto(Producto p, ServicioBD servicio)
         {
             prod.Add(p);
-            servicio.Actualizar<ListaDeseos>(this, "idListaDeseos");
+            servicio.Actualizar(this, "idListaDeseos");
 
         }
 
         public void eliminarProducto(Producto p, ServicioBD servicio)
         {
             prod.Remove(p);
-            servicio.Actualizar<ListaDeseos>(this, "idListaDeseos");
+            servicio.Actualizar(this, "idListaDeseos");
         }
     }
 }
