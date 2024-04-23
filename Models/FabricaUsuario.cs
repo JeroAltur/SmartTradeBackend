@@ -1,8 +1,8 @@
-﻿using SamartTradeBackend.Models.Productos;
+﻿using SamartTradeBackend.Models.ListaDeseos;
 using SamartTradeBackend.Models.Usuarios;
 using SmartTradeBackend.Services;
 
-namespace SamartTradeBackend.Models
+namespace SmartTradeBackend.Models
 {
     public class FabricaUsuario
     {
@@ -13,28 +13,26 @@ namespace SamartTradeBackend.Models
         }
         public void crearProducto(string tipo, Usuario u)
         {
-            Valoracion valoracion = new Valoracion();
-            int idValoracion = bd.Insertar(valoracion);
-            Console.WriteLine(valoracion.idValoracion);
-            p.id_valoracion = idValoracion;
+            
+            ListaDeseos deseos = new ListaDeseos();
+            int iddeseos = bd.Insertar(deseos);
+            u.id_Deseos = iddeseos;
+            int iduser = bd.Insertar(u);
 
-            if (tipo == "ropa")
+            if (tipo == "cliente")
             {
-                int idprod = bd.Insertar(p);
-                Ropa nuevoProducto = new Ropa(idprod);
-                bd.Insertar(nuevoProducto);
+                Cliente usuario = new Cliente(iduser);
+                bd.Insertar(usuario);
             }
-            if (tipo == "comida")
+            if (tipo == "vendedor")
             {
-                int idprod = bd.Insertar(p);
-                Ropa nuevoProducto = new Ropa(idprod);
-                bd.Insertar(nuevoProducto);
+                Vendedor usuario = new Vendedor(iduser);
+                bd.Insertar(usuario);
             }
-            if (tipo == "electronica")
+            if (tipo == "tecnico")
             {
-                int idprod = bd.Insertar(p);
-                Ropa nuevoProducto = new Ropa(idprod);
-                bd.Insertar(nuevoProducto);
+                Tecnico usuario = new Tecnico(iduser);
+                bd.Insertar(usuario);
             }
         }
     }
