@@ -5,6 +5,7 @@ using Dapper;
 using System.Data;
 using Dapper.Contrib.Extensions;
 using SamartTradeBackend.Models.Productos;
+using SamartTradeBackend;
 
 namespace SmartTradeBackend.Services
 {
@@ -15,7 +16,7 @@ namespace SmartTradeBackend.Services
         public ServicioBD(MySqlConnection conexion)
         {
             _conexion = conexion;
-            conexion.Open();
+            _conexion.Open();
         }
 
         public void CrearTablas()

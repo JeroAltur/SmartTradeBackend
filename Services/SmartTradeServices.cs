@@ -1,4 +1,5 @@
-﻿using SamartTradeBackend.Models.ListaDeseos;
+﻿using SamartTradeBackend;
+using SamartTradeBackend.Models.ListaDeseos;
 using SamartTradeBackend.Models.Productos;
 using SmartTradeBackend.Models;
 using System.Resources;
@@ -7,11 +8,13 @@ namespace SmartTradeBackend.Services
 {
     internal class SmartTradeServices
     {
+        Conexion conexion = new Conexion();
         private readonly ServicioBD bd;
+        
 
-        public SmartTradeServices(ServicioBD servicio)
+        public SmartTradeServices()
         {
-            this.bd = servicio;
+            bd = new ServicioBD(conexion.GetConexion());
         }
 
         public void Crear()

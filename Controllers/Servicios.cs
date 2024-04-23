@@ -11,14 +11,11 @@ namespace SamartTradeBackend.Controllers
     [Route("[controller]")]
     public class Servicios : ControllerBase
     {
-        Conexion conexion = new Conexion();
-        private readonly ServicioBD servicioBD;
         private readonly SmartTradeServices servicio;
 
         public Servicios()
         {
-            servicioBD = new ServicioBD(conexion.GetConexion());
-            servicio = new SmartTradeServices(servicioBD);
+            servicio = new SmartTradeServices();
         }
 
         [HttpDelete("BorrarTablas")]
