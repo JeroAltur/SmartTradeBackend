@@ -26,13 +26,13 @@ namespace SmartTradeBackend.Models
             if (tipo == "comida")
             {
                 int idprod = bd.Insertar(p);
-                Comida nuevoProducto = new Comida(idprod);
+                Ropa nuevoProducto = new Ropa(idprod);
                 bd.Insertar(nuevoProducto);
             }
             if (tipo == "electronica")
             {
                 int idprod = bd.Insertar(p);
-                Electronica nuevoProducto = new Electronica(idprod);
+                Ropa nuevoProducto = new Ropa(idprod);
                 bd.Insertar(nuevoProducto);
             }
         }
