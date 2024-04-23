@@ -65,7 +65,7 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
-        public List<Producto> ObtenerListaDeseos()
+        /*public List<Producto> ObtenerListaDeseos()
         {
             List<Producto> ProductosDeseados = new List<Producto>();
             List<ListaDeseos> listasDeseos = bd.Todo<ListaDeseos>();
@@ -77,7 +77,7 @@ namespace SmartTradeBackend.Services
             }
 
             return ProductosDeseados;
-        }
+        }*/
 
         public Producto ProductoPorId(int id)
         {
@@ -114,7 +114,7 @@ namespace SmartTradeBackend.Services
             fabricaProducto.crearProducto(tipo, p);
         }
 
-        public void AñadirListaDeseos(ListaDeseos ld, Producto p)
+        /*public void AñadirListaDeseos(ListaDeseos ld, Producto p)
         {
             ld.añadirProducto(p, bd);
         }
@@ -122,7 +122,7 @@ namespace SmartTradeBackend.Services
         public void EliminarListaDeseos(ListaDeseos ld, Producto p)
         {
             ld.eliminarProducto(p, bd);
-        }
+        }*/
 
         public Producto AgregarValoracion(Producto p, int v)
         {
