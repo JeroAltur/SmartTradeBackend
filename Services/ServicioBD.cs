@@ -20,45 +20,136 @@ namespace SmartTradeBackend.Services
 
         public void CrearTablas()
         {
-            _conexion.Execute(@"
-        CREATE TABLE IF NOT EXISTS Valoracion (
-            idValoracion INT AUTO_INCREMENT PRIMARY KEY,
-            valoraciones DOUBLE,
-            total DOUBLE,
-            valor DOUBLE
-        );
-    ");
+            using (var transaction = _conexion.BeginTransaction())
+            {
+                try
+                {
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Valoracion (
+                    idValoracion INT AUTO_INCREMENT PRIMARY KEY,
+                    valoraciones DOUBLE,
+                    total DOUBLE,
+                    valor DOUBLE
+                );
+            ");
 
-            // Luego, crear las otras tablas que hacen referencia a Valoracion
-            _conexion.Execute(@"
-        CREATE TABLE IF NOT EXISTS Producto (
-            idProducto INT AUTO_INCREMENT PRIMARY KEY,
-            nombre VARCHAR(255) NOT NULL,
-            descripcion TEXT,
-            precio DOUBLE,
-            imagenes TEXT,
-            HuellaAmbiental DOUBLE,
-            id_valoracion INT,
-            valor DOUBLE,
-            ventas INT,
-            FOREIGN KEY (id_valoracion) REFERENCES Valoracion(idValoracion)
-        );
-        CREATE TABLE IF NOT EXISTS Electronica (
-            Id INT AUTO_INCREMENT PRIMARY KEY,
-            id_Prod INT,
-            FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
-        );
-        CREATE TABLE IF NOT EXISTS Comida (
-            Id INT AUTO_INCREMENT PRIMARY KEY,
-            id_Prod INT,
-            FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
-        );
-        CREATE TABLE IF NOT EXISTS Ropa (
-            Id INT AUTO_INCREMENT PRIMARY KEY,
-            id_Prod INT,
-            FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
-        );
-    ");
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Producto (
+                    idProducto INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre VARCHAR(255) NOT NULL,
+                    descripcion TEXT,
+                    precio DOUBLE,
+                    imagenes TEXT,
+                    HuellaAmbiental DOUBLE,
+                    id_valoracion INT,
+                    valor DOUBLE,
+                    ventas INT,
+                    FOREIGN KEY (id_valoracion) REFERENCES Valoracion(idValoracion)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Electronica (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_Prod INT,
+                    FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Comida (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_Prod INT,
+                    FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Ropa (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_Prod INT,
+                    FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Usuario (
+                    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre VARCHAR(255) NOT NULL,
+                    correo VARCHAR(255) NOT NULL,
+                    direccion TEXT,
+                    contraseña VARCHAR(255) NOT NULL,
+                    id_Deseos INT,
+                    id_Carro INT,
+                    FOREIGN KEY (id_Deseos) REFERENCES ListaDeseos(idDeseos),
+                    FOREIGN KEY (id_Carro) REFERENCES CarroCompra(idCompra)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Cliente (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_User INT,
+                    FOREIGN KEY (id_User) REFERENCES Usuario(idUsuario)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Tecnico (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_User INT,
+                    FOREIGN KEY (id_User) REFERENCES Usuario(idUsuario)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS Vendedor (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_User INT,
+                    FOREIGN KEY (id_User) REFERENCES Usuario(idUsuario)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS CarroCompra (
+                    idCompra INT AUTO_INCREMENT PRIMARY KEY
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS ProductoCarroCompra (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_Compra INT,
+                    id_Prod INT,
+                    FOREIGN KEY (id_Compra) REFERENCES CarroCompra(idCompra),
+                    FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS ListaDeseos (
+                    idDeseos INT AUTO_INCREMENT PRIMARY KEY
+                );
+            ");
+
+                    _conexion.Execute(@"
+                CREATE TABLE IF NOT EXISTS ProductoListaDeseos (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_Deseos INT,
+                    id_Prod INT,
+                    FOREIGN KEY (id_Deseos) REFERENCES ListaDeseos(idDeseos),
+                    FOREIGN KEY (id_Prod) REFERENCES Producto(idProducto)
+                );
+            ");
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    // Manejar la excepción aquí
+                }
+            }
         }
 
         public int Insertar<T>(T entity) where T : class
@@ -129,6 +220,74 @@ namespace SmartTradeBackend.Services
             {
                 // Manejar la excepción aquí
                 Console.WriteLine("Error al borrar todos los datos: " + ex.Message);
+            }
+        }
+
+        public void BorrarTablas()
+        {
+            using (var transaction = _conexion.BeginTransaction())
+            {
+                try
+                {
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS ProductoListaDeseos;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS ListaDeseos;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS ProductoCarroCompra;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS CarroCompra;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Vendedor;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Tecnico;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Cliente;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Usuario;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Ropa;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Comida;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Electronica;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Producto;
+            ");
+
+                    _conexion.Execute(@"
+                DROP TABLE IF EXISTS Valoracion;
+            ");
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    // Manejar la excepción aquí
+                }
             }
         }
 

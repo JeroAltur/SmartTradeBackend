@@ -19,6 +19,11 @@ namespace SmartTradeBackend.Services
             bd.CrearTablas();
         }
 
+        public void Borrar()
+        {
+            bd.BorrarTablas();
+        }
+
         public List<Producto> Todo()
         {
             List<Producto> result = bd.Todo<Producto>().ToList();

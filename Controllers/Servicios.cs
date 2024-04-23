@@ -21,15 +21,15 @@ namespace SamartTradeBackend.Controllers
             servicio = new SmartTradeServices(servicioBD);
         }
 
-        [HttpGet("BorrarTablas")]
-        public string GetBorrarTablas()
+        [HttpDelete("BorrarTablas")]
+        public string DeleteBorrarTablas()
         {
-            //servicio.Borrar();
+            servicio.Borrar();
             return "BD borrada";
         }
 
-        [HttpGet("CrearTablas")]
-        public string Crear()
+        [HttpPost("CrearTablas")]
+        public string PostCrear()
         {
             servicio.Crear();
             return "BD Creada";
@@ -84,8 +84,8 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
-        [HttpPost("CrearProducto/{tipo}")]
-        public string PostCrearProducto(string name, string description, double price, string imagenes, double huella, string tipo)
+        [HttpPatch("CrearProducto/{tipo}")]
+        public string PatchCrearProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
             servicio.AgregarProducto(name, description, price, imagenes, huella, tipo);
             return "Producto Añadido";

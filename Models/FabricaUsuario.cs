@@ -1,4 +1,5 @@
-﻿using SamartTradeBackend.Models.ListaDeseos;
+﻿using SamartTradeBackend.Models.CarroCompra;
+using SamartTradeBackend.Models.ListaDeseos;
 using SamartTradeBackend.Models.Usuarios;
 using SmartTradeBackend.Services;
 
@@ -17,6 +18,9 @@ namespace SmartTradeBackend.Models
             ListaDeseos deseos = new ListaDeseos();
             int iddeseos = bd.Insertar(deseos);
             u.id_Deseos = iddeseos;
+            CarroCompra carroCompra = new CarroCompra();
+            int idcarro = bd.Insertar(carroCompra);
+            u.id_Carro = idcarro;
             int iduser = bd.Insertar(u);
 
             if (tipo == "cliente")
