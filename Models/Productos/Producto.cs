@@ -11,8 +11,7 @@ namespace SamartTradeBackend.Models.Productos
         public double precio { get; set; }
         public string imagenes { get; set; }
         public double HuellaAmbiental { get; set; }
-        public int id_valoracion { get; set; }
-        public double valor { get; set; }
+        public Valoracion valoracion { get; set; }
         public int ventas { get; set; }
 
         public Producto()
@@ -20,8 +19,8 @@ namespace SamartTradeBackend.Models.Productos
             imagenes = "";
             HuellaAmbiental = 0;
             Random rnd = new Random();
-            valor = rnd.Next(0, 5);
             ventas = rnd.Next(0, 9999);
+            valoracion = new Valoracion();
         }
 
         public Producto(string nombre, string descripcion, double precio, string imagenes, double huellaAmbiental) : this()
@@ -36,15 +35,11 @@ namespace SamartTradeBackend.Models.Productos
         public void venta(ServicioBD servicio)
         {
             ventas++;
-            servicio.Actualizar(this, "idProducto");
         }
 
-        public void ValoracionNueva(double v, ServicioBD servicio)
+        public void ValoracionNueva(double v)
         {
-            Valoracion valoracion = servicio.BuscarPorIdValoracion<Valoracion>(id_valoracion);
-            valoracion.valoracionNueva(v, servicio);
-            valor = valoracion.valor;
-            servicio.Actualizar(this, "idProducto");
+            valoracion.valoracionNueva(v);
         }
     }
 }

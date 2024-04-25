@@ -1,18 +1,24 @@
 ﻿using SmartTradeBackend.Services;
 using Dapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SamartTradeBackend.Models.Productos
 {
-    public class Comida
+    public class Comida: Producto
     {
-        public int Id { get; set; }
-        public int id_Prod { get; set; }
 
         public Comida() { }
 
-        public Comida(int idprod)
+        public Comida(Producto p)
         {
-            id_Prod = idprod;
+            idProducto = p.idProducto;
+            nombre = p.nombre;
+            descripcion = p.descripcion;
+            precio = p.precio;
+            imagenes = p.imagenes;
+            HuellaAmbiental = p.HuellaAmbiental;
+            valoracion = p.valoracion;
+            ventas = p.ventas;
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace SamartTradeBackend.Models.Usuarios
+﻿using SamartTradeBackend.Models.CarroCompras;
+using SamartTradeBackend.Models.ListaDeseos;
+using SamartTradeBackend.Models.Usuarios;
+using SmartTradeBackend.Services;
+
+namespace SamartTradeBackend.Models.Usuarios
 {
     public class Usuario
     {
@@ -7,19 +12,21 @@
         public string correo { get; set; }
         public string direccion { get; set; }
         public string contraseña { get; set; }
-        public int id_Deseos { get; set; }
-        public int id_Carro { get; set; }
+        public CarroCompra carrito { get; set; }
+        public Deseos listaDeseos { get; set; }
 
-        public Usuario() { }
+        public Usuario() 
+        { 
+            carrito = new CarroCompra();
+            listaDeseos = new Deseos();
+        }
 
-        public Usuario(string nombre, string correo, string direccion, string contraseña, int id_Deseos, int id_Carro)
+        public Usuario(string nombre, string correo, string direccion, string contraseña)
         {
             this.nombre = nombre;
             this.correo = correo;
             this.direccion = direccion;
             this.contraseña = contraseña;
-            this.id_Deseos = id_Deseos;
-            this.id_Carro = id_Carro;
         }
     }
 }

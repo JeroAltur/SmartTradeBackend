@@ -53,7 +53,7 @@ namespace SmartTradeBackend.Services
         {
             List<Producto> resultadoProvicional = bd.Todo<Producto>().ToList();
 
-            List<Producto> result = resultadoProvicional.OrderByDescending(p => p.valor).Take(8).ToList();
+            List<Producto> result = resultadoProvicional.OrderByDescending(p => p.valoracion.valor).Take(8).ToList();
             return result;
         }
 
@@ -94,13 +94,6 @@ namespace SmartTradeBackend.Services
             return producto;
         }
 
-        public Valoracion ValoracionPorId(int id)
-        {
-            Valoracion valoracion = new Valoracion();
-            valoracion = bd.BuscarPorIdValoracion<Valoracion>(id);
-            return valoracion;
-        }
-
 
         public void AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
@@ -111,14 +104,14 @@ namespace SmartTradeBackend.Services
                 if (tipo == "ropa") { imagenes = "../Resources/Imgages/ropa.png"; }
             }
             Producto p = new Producto(name, description, price, imagenes, huella);
-            FabricaProducto fabricaProducto = new FabricaProducto(bd);
+            FabricaProducto fabricaProducto = new FabricaProducto();
             fabricaProducto.crearProducto(tipo, p);
         }
 
         public void AgregarProductoDirecto(Producto p, string tipo)
         {
             Producto product = new Producto();
-            FabricaProducto fabricaProducto = new FabricaProducto(bd);
+            FabricaProducto fabricaProducto = new FabricaProducto();
             fabricaProducto.crearProducto(tipo, p);
         }
 
@@ -134,7 +127,7 @@ namespace SmartTradeBackend.Services
 
         public Producto AgregarValoracion(Producto p, int v)
         {
-            p.ValoracionNueva(v, bd);
+            p.ValoracionNueva(v);
             return p;
         }
 

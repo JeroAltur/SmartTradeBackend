@@ -17,12 +17,11 @@ namespace SamartTradeBackend.Models.Productos
             total = 0;
         }
 
-        public void valoracionNueva(double v, ServicioBD servicio)
+        public void valoracionNueva(double v)
         {
             valoraciones++;
             total += v;
             valor = total / valoraciones;
-            servicio.Actualizar(this, "idValoracion");
         }
     }
 }

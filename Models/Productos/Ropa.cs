@@ -3,15 +3,20 @@ using Dapper;
 
 namespace SamartTradeBackend.Models.Productos
 {
-    public class Ropa
+    public class Ropa: Producto
     {
-        public int Id { get; set; }
-        public int id_Prod { get; set; }
 
         public Ropa() { }
-        public Ropa(int idprod)
+        public Ropa(Producto p)
         {
-            id_Prod = idprod;
+            idProducto = p.idProducto;
+            nombre = p.nombre;
+            descripcion = p.descripcion;
+            precio = p.precio;
+            imagenes = p.imagenes;
+            HuellaAmbiental = p.HuellaAmbiental;
+            valoracion = p.valoracion;
+            ventas = p.ventas;
         }
     }
 }

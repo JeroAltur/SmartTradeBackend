@@ -1,15 +1,24 @@
-﻿namespace SamartTradeBackend.Models.Usuarios
+﻿using SamartTradeBackend.Models.CarroCompras;
+using SamartTradeBackend.Models.ListaDeseos;
+using SamartTradeBackend.Models.Usuarios;
+using SmartTradeBackend.Services;
+
+namespace SamartTradeBackend.Models.Usuarios
 {
-    public class Vendedor
+    public class Vendedor: Usuario
     {
-        public int Id { get; set; }
-        public int id_User { get; set; }
 
         public Vendedor() { }
 
-        public Vendedor(int id_User)
+        public Vendedor(Usuario u)
         {
-            this.id_User = id_User;
+            idUsuario = u.idUsuario;
+            nombre = u.nombre;
+            correo = u.correo;
+            direccion = u.direccion;
+            contraseña = u.contraseña;
+            carrito = u.carrito;
+            listaDeseos = u.listaDeseos;
         }
     }
 }
