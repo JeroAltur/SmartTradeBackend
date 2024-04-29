@@ -17,38 +17,12 @@ namespace SamartTradeBackend.Controllers
             servicio = new SmartTradeServices();
         }
 
-        [HttpDelete("BorrarTablas")]
-        public string DeleteBorrarTablas()
-        {
-            servicio.Borrar();
-            return "BD borrada";
-        }
-
-        [HttpPost("CrearTablas")]
-        public string PostCrear()
-        {
-            servicio.Crear();
-            return "BD Creada";
-        }
-
-        [HttpPost("IniciarBD")]
-        public string PostIniciarBD()
-        {
-            servicio.IniciarBD();
-            return "BD iniciada";
-        }
+        //--------------------------------------------
 
         [HttpGet("Todo")]
         public string GetTodo()
         {
-            string respuesta = JsonConvert.SerializeObject(servicio.Todo());
-            return respuesta;
-        }
-
-        [HttpGet("TodoValoracion")]
-        public string GetTodoValoracion()
-        {
-            string respuesta = JsonConvert.SerializeObject(servicio.TodoValoracion());
+            string respuesta = JsonConvert.SerializeObject(servicio.TodoProducto());
             return respuesta;
         }
 
@@ -87,21 +61,12 @@ namespace SamartTradeBackend.Controllers
             return "Producto Añadido";
         }
 
-        [HttpGet("BuscarPorId/{id}")]
-        public string GetBuscarPorId(int id)
-        {
-            string respuesta = JsonConvert.SerializeObject(servicio.ProductoPorId(id));
-            return respuesta;
-        }
-
         [HttpPost("AgregarValoracion/{id}/{valor}")]
         public string PostAgregarValoracion(int id, int valor)
         {
-            Producto p = servicio.ProductoPorId(id);
-            string respuesta = JsonConvert.SerializeObject(servicio.AgregarValoracion(p, valor));
+            string respuesta = JsonConvert.SerializeObject(servicio.AgregarValoracion(id, valor));
             return respuesta;
         }
-
 
     }
 }
