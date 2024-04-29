@@ -18,7 +18,6 @@ namespace SamartTradeBackend.Models
         public List<Vendedor> Vendedores { get; set; }
         public int ultimoIdProducto { get; set; }
         public int ultimoIdValoracion { get; set; }
-        public int ultimoIdUsuario { get; set; }
         public int ultimoIdCarrito { get; set; }
         public int ultimoIdDeseos { get; set; }
 
@@ -32,7 +31,6 @@ namespace SamartTradeBackend.Models
 
             ultimoIdProducto = 0;
             ultimoIdValoracion = 0;
-            ultimoIdUsuario = 0;
             ultimoIdCarrito = 0;
             ultimoIdDeseos = 0;
 
@@ -126,13 +124,13 @@ namespace SamartTradeBackend.Models
             //Iniciar usuarios
             FabricaUsuario fu = new FabricaUsuario();
 
-            Usuario cliente = new Usuario("Pablo", "pablo@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 21", "contaseña");
+            Usuario cliente = new Usuario(73365328, "Pablo", "pablo@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 21", "contaseña");
             fu.crearUsuario(cliente, "cliente", this);
 
-            Usuario vendedor = new Usuario("Pep", "pep@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 26", "contaseña");
+            Usuario vendedor = new Usuario(73965328, "Pep", "pep@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 26", "contaseña");
             fu.crearUsuario(vendedor, "vendedor", this);
 
-            Usuario tecnico = new Usuario("Paco", "paco@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 33", "contaseña");
+            Usuario tecnico = new Usuario(73365312, "Paco", "paco@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 33", "contaseña");
             fu.crearUsuario(tecnico, "tecnico", this);
         }
     }

@@ -12,7 +12,7 @@ namespace SamartTradeBackend.Models.Usuarios
 
         public Cliente(Usuario u)
         {
-            idUsuario = u.idUsuario;
+            DNI = u.DNI;
             nombre = u.nombre;
             correo = u.correo;
             direccion = u.direccion;

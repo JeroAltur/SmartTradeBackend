@@ -18,7 +18,6 @@ namespace SmartTradeBackend.Models
             if (tipo == "cliente")
             {
                 Cliente usuario = new Cliente(u);
-                usuario.idUsuario = ++t.ultimoIdUsuario;
                 usuario.carrito.idCarro = ++t.ultimoIdCarrito;
                 usuario.listaDeseos.idDeseos = ++t.ultimoIdDeseos;
                 t.Clientes.Add(usuario);
@@ -26,7 +25,6 @@ namespace SmartTradeBackend.Models
             if (tipo == "vendedor")
             {
                 Vendedor usuario = new Vendedor(u);
-                usuario.idUsuario = ++t.ultimoIdUsuario;
                 usuario.carrito.idCarro = ++t.ultimoIdCarrito;
                 usuario.listaDeseos.idDeseos = ++t.ultimoIdDeseos;
                 t.Vendedores.Add(usuario);
