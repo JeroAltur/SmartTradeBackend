@@ -8,7 +8,7 @@ using System.Resources;
 
 namespace SmartTradeBackend.Services
 {
-    internal class SmartTradeServices
+    public class SmartTradeServices
     {
         Tienda tienda;
         ConversorDeTipos conversor = new ConversorDeTipos();
