@@ -54,7 +54,7 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
-        [HttpPatch("CrearProducto/{tipo}")]
+        [HttpPatch("CrearProducto/{name}/{description}/{price}/{imagen}/{huella}/{tipo}")] 
         public string PatchCrearProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
             servicio.AgregarProducto(name, description, price, imagenes, huella, tipo);
