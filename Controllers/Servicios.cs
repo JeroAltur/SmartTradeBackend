@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SmartTradeBackend.Services;
 using SamartTradeBackend;
 using SamartTradeBackend.Models.Productos;
+using SamartTradeBackend.Models.Usuarios;
 
 namespace SamartTradeBackend.Controllers
 {
@@ -80,7 +81,17 @@ namespace SamartTradeBackend.Controllers
         [HttpGet("Login/{correo}/{contraseña}")]
         public string Getlogin(string correo, string contraseña)
         {
-            string respuesta = JsonConvert.SerializeObject(servicio.Loguearse(correo, contraseña));
+            Usuario? u = servicio.Loguearse(correo, contraseña);
+            string respuesta;
+
+            if (u == null)
+            {
+                respuesta = JsonConvert.SerializeObject("Correo o contraseña incorrectos.");
+            }
+            else
+            {
+                respuesta = JsonConvert.SerializeObject(u);
+            }
             return respuesta;
         }
 
@@ -111,6 +122,29 @@ namespace SamartTradeBackend.Controllers
         public string PostBorrrarCarrito(int iduser, int idprod)
         {
             string respuesta = JsonConvert.SerializeObject(servicio.EliminarCarrito(iduser, idprod));
+            return respuesta;
+        }
+
+
+        //Cosas Probar
+        [HttpGet("TodoCliente")]
+        public string GetTodoCliente()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.TodoCliente());
+            return respuesta;
+        }
+
+        [HttpGet("TodoVendedor")]
+        public string GetTodoVendedor()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.TodoVendedor());
+            return respuesta;
+        }
+
+        [HttpGet("TodoTecnico")]
+        public string GetTodoTecnico()
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.TodoTecnico());
             return respuesta;
         }
 

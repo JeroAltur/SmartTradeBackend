@@ -5,6 +5,7 @@ using SamartTradeBackend.Models.Productos;
 using SamartTradeBackend.Models.Usuarios;
 using SmartTradeBackend.Models;
 using System.IO.Pipelines;
+using System.Net;
 using System.Resources;
 
 namespace SmartTradeBackend.Services
@@ -22,7 +23,19 @@ namespace SmartTradeBackend.Services
         //Productos
         public List<Producto> TodoProducto()
         {
-            List<Producto> result = [.. tienda.Comida, .. tienda.Electronica, .. tienda.Ropa];
+            List<Producto> result = new List<Producto>();
+            foreach(Comida p in tienda.Comida)
+            {
+                result.Add(p);
+            }
+            foreach (Ropa p in tienda.Ropa)
+            {
+                result.Add(p);
+            }
+            foreach (Electronica p in tienda.Electronica)
+            {
+                result.Add(p);
+            }
 
             return result;
         }
@@ -87,23 +100,28 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
+        //No va be
         public string AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
-            //comprobar tipo
-            if (tipo != "ropa" || tipo != "comida" || tipo != "electronica")
+            // Comprobar tipo de producto
+            if (tipo != "ropa" && tipo != "comida" && tipo != "electronica")
             {
-                return "Tipo de producto no valido.";
+                return "Tipo de producto no válido.";
             }
 
-            if (imagenes == null)
+            // Asignar imágenes predeterminadas si imagenes es null o vacío
+            if (string.IsNullOrEmpty(imagenes))
             {
                 if (tipo == "electronica") { imagenes = "../Resources/Imgages/electronica.png"; }
-                if (tipo == "comida") { imagenes = "../Resources/Imgages/comida.png"; }
-                if (tipo == "ropa") { imagenes = "../Resources/Imgages/ropa.png"; }
+                else if (tipo == "comida") { imagenes = "../Resources/Imgages/comida.png"; }
+                else if (tipo == "ropa") { imagenes = "../Resources/Imgages/ropa.png"; }
             }
+
+            // Crear el producto
             Producto p = new Producto(name, description, price, imagenes, huella);
             FabricaProducto fabricaProducto = new FabricaProducto();
             fabricaProducto.crearProducto(p, tipo, tienda);
+
             return "Producto creado correctamente";
         }
 
@@ -168,10 +186,11 @@ namespace SmartTradeBackend.Services
 
 
         //Usuarios
+        //No va be
         public string AgregarUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
         {
             //comprobar tipo
-            if(tipo != "cliente" || tipo != "vendedor" || tipo != "tecnico")
+            if(tipo != "cliente" && tipo != "vendedor" && tipo != "tecnico")
             {
                 return "Tipo de usuario no valido.";
             }
@@ -215,40 +234,65 @@ namespace SmartTradeBackend.Services
             return "Usuario creado con éxito.";
         }
 
+        /*public Usuario? Loguearse(string correo, string contraseña)
+        {
+            Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);
+            if (cliente != null)
+            {
+                return cliente;
+            }
+
+            // Buscar en la lista de técnicos
+            Tecnico? tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo && t.contraseña == contraseña);
+            if (tecnico != null)
+            {
+                return tecnico;
+            }
+
+            // Buscar en la lista de vendedores
+            Vendedor? vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo && v.contraseña == contraseña);
+            if (vendedor != null)
+            {
+                return vendedor;
+            }
+
+            return null;
+        }*/
+
+        //No va be
         public Usuario? Loguearse(string correo, string contraseña)
         {
-            try
+            for (int i = 0; i < tienda.Clientes.Count; i++)
             {
-                Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);
-                if (cliente != null)
+                if (tienda.Clientes[i].correo == correo)
                 {
-                    return cliente;
+                    if (tienda.Clientes[i].contraseña == contraseña)
+                    {
+                        return tienda.Clientes[i];
+                    }
                 }
-
-                // Buscar en la lista de técnicos
-                Tecnico? tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo && t.contraseña == contraseña);
-                if (tecnico != null)
-                {
-                    return tecnico;
-                }
-
-                // Buscar en la lista de vendedores
-                Vendedor? vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo && v.contraseña == contraseña);
-                if (vendedor != null)
-                {
-                    return vendedor;
-                }
-
-                // Si no se encuentra ningún usuario, lanzar una excepción
-                throw new Exception("Correo o contraseña incorrectos.");
             }
-            catch (Exception ex)
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
             {
-                // Manejar cualquier excepción que pueda ocurrir durante el proceso de inicio de sesión
-                throw new Exception("Ocurrió un error durante el inicio de sesión: " + ex.Message);
+                if (tienda.Vendedores[i].correo == correo)
+                {
+                    if(tienda.Clientes[i].contraseña == contraseña)
+                    {
+                        return tienda.Clientes[i];
+                    }
+                }
             }
-
-
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].correo == correo)
+                {
+                    if (tienda.Clientes[i].contraseña == contraseña)
+                    {
+                        return tienda.Clientes[i];
+                    }
+                }
+            }
+            return null;
         }
 
         //ListaDeseos
@@ -383,6 +427,28 @@ namespace SmartTradeBackend.Services
                 }
             }
             return "No se ha podido eliminar el producto.";
+        }
+
+        //CosasProbar
+        public List<Cliente>? TodoCliente()
+        {
+            List<Cliente>? lista = new List<Cliente>();
+            lista = tienda.Clientes;
+            return lista;
+        }
+
+        public List<Vendedor>? TodoVendedor()
+        {
+            List<Vendedor>? lista = new List<Vendedor>();
+            lista = tienda.Vendedores;
+            return lista;
+        }
+
+        public List<Tecnico>? TodoTecnico()
+        {
+            List<Tecnico>? lista = new List<Tecnico>();
+            lista = tienda.Tecnicos;
+            return lista;
         }
 
     }

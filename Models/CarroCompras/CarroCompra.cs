@@ -8,7 +8,10 @@ namespace SamartTradeBackend.Models.CarroCompras
     {
         public int idCarro { get; set; }
         public List<Producto> productos { get; set; }
-        public CarroCompra() { productos = new List<Producto>(); }
+        public CarroCompra() 
+        { 
+            productos = new List<Producto>();
+        }
 
         public void AgregarProducto(Producto producto)
         {

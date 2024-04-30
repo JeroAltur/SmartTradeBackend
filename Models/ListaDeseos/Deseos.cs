@@ -7,7 +7,10 @@ namespace SamartTradeBackend.Models.ListaDeseos
     {
         public int idDeseos { get; set; }
         public List<Producto> productos { get; set; }
-        public Deseos() { productos = new List<Producto>(); }
+        public Deseos() 
+        { 
+            productos = new List<Producto>();
+        }
 
 
         public void AgregarProducto(Producto producto)

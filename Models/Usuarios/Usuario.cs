@@ -21,7 +21,7 @@ namespace SamartTradeBackend.Models.Usuarios
             listaDeseos = new Deseos();
         }
 
-        public Usuario(int dni, string nombre, string correo, string direccion, string contraseña)
+        public Usuario(int dni, string nombre, string correo, string direccion, string contraseña) : this()
         {
             this.DNI = dni;
             this.nombre = nombre;
