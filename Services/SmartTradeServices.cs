@@ -87,8 +87,14 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
-        public void AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
+        public string AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
+            //comprobar tipo
+            if (tipo != "ropa" || tipo != "comida" || tipo != "electronica")
+            {
+                return "Tipo de producto no valido.";
+            }
+
             if (imagenes == null)
             {
                 if (tipo == "electronica") { imagenes = "../Resources/Imgages/electronica.png"; }
@@ -98,6 +104,7 @@ namespace SmartTradeBackend.Services
             Producto p = new Producto(name, description, price, imagenes, huella);
             FabricaProducto fabricaProducto = new FabricaProducto();
             fabricaProducto.crearProducto(p, tipo, tienda);
+            return "Producto creado correctamente";
         }
 
         public string AgregarValoracion(int idProd, int v)
@@ -163,12 +170,41 @@ namespace SmartTradeBackend.Services
         //Usuarios
         public string AgregarUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
         {
+            //comprobar tipo
+            if(tipo != "cliente" || tipo != "vendedor" || tipo != "tecnico")
+            {
+                return "Tipo de usuario no valido.";
+            }
+
+            //Comprobar clientes
             if (tienda.Clientes.Any(cliente => cliente.DNI == dni))
             {
                 return "Error: Ya existe un usuario con el mismo DNI.";
             }
 
             if (tienda.Clientes.Any(cliente => cliente.correo == correo))
+            {
+                return "Error: Ya existe un usuario con el mismo correo electrónico.";
+            }
+
+            //Comprobar vendedores
+            if (tienda.Vendedores.Any(cliente => cliente.DNI == dni))
+            {
+                return "Error: Ya existe un usuario con el mismo DNI.";
+            }
+
+            if (tienda.Vendedores.Any(cliente => cliente.correo == correo))
+            {
+                return "Error: Ya existe un usuario con el mismo correo electrónico.";
+            }
+
+            //Comprobar tecnicos
+            if (tienda.Tecnicos.Any(cliente => cliente.DNI == dni))
+            {
+                return "Error: Ya existe un usuario con el mismo DNI.";
+            }
+
+            if (tienda.Tecnicos.Any(cliente => cliente.correo == correo))
             {
                 return "Error: Ya existe un usuario con el mismo correo electrónico.";
             }
@@ -181,159 +217,173 @@ namespace SmartTradeBackend.Services
 
         public Usuario? Loguearse(string correo, string contraseña)
         {
-            // Buscar en la lista de clientes
-            Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);
-            if (cliente != null)
+            try
             {
-                return cliente;
+                Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);
+                if (cliente != null)
+                {
+                    return cliente;
+                }
+
+                // Buscar en la lista de técnicos
+                Tecnico? tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo && t.contraseña == contraseña);
+                if (tecnico != null)
+                {
+                    return tecnico;
+                }
+
+                // Buscar en la lista de vendedores
+                Vendedor? vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo && v.contraseña == contraseña);
+                if (vendedor != null)
+                {
+                    return vendedor;
+                }
+
+                // Si no se encuentra ningún usuario, lanzar una excepción
+                throw new Exception("Correo o contraseña incorrectos.");
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción que pueda ocurrir durante el proceso de inicio de sesión
+                throw new Exception("Ocurrió un error durante el inicio de sesión: " + ex.Message);
             }
 
-            // Buscar en la lista de técnicos
-            Tecnico? tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo && t.contraseña == contraseña);
-            if (tecnico != null)
-            {
-                return tecnico;
-            }
 
-            // Buscar en la lista de vendedores
-            Vendedor? vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo && v.contraseña == contraseña);
-            if (vendedor != null)
-            {
-                return vendedor;
-            }
-
-            return null;
-        }
-
-        public Usuario BuscarUsuarioPorId(int idUsuario)
-        {
-            // Buscar en la lista de clientes
-            Usuario cliente = tienda.Clientes.FirstOrDefault(c => c.DNI == idUsuario);
-            if (cliente != null)
-            {
-                return cliente;
-            }
-
-            // Buscar en la lista de técnicos
-            Usuario tecnico = tienda.Tecnicos.FirstOrDefault(t => t.DNI == idUsuario);
-            if (tecnico != null)
-            {
-                return tecnico;
-            }
-
-            // Buscar en la lista de vendedores
-            Usuario vendedor = tienda.Vendedores.FirstOrDefault(v => v.DNI == idUsuario);
-            if (vendedor != null)
-            {
-                return vendedor;
-            }
-
-            // Si no se encuentra el usuario, devolver null
-            return null;
         }
 
         //ListaDeseos
-        public void AñadirListaDeseos(int dni, int prod)
+        public string AñadirListaDeseos(int dni, int prod)
         {
-            // Buscar el usuario por su ID
-            Usuario usuario = BuscarUsuarioPorId(dni);
-            if (usuario != null)
+            Producto producto = tienda.BuscarProductoPorId(prod);
+            if (producto != null)
             {
-                // Buscar el producto por su ID
-                Producto producto = tienda.BuscarProductoPorId(prod);
-                if (producto != null)
+                for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
-                    // Agregar el producto a la lista de deseos del usuario
-                    usuario.listaDeseos.AgregarProducto(producto);
+                    if (tienda.Clientes[i].DNI == dni)
+                    {
+                        tienda.Clientes[i].listaDeseos.AgregarProducto(producto);
+                        return "Producto añadido correctamente.";
+                    }
                 }
-                else
+                for (int i = 0; i < tienda.Vendedores.Count; i++)
                 {
-                    
+                    if (tienda.Vendedores[i].DNI == dni)
+                    {
+                    tienda. Vendedores[i].listaDeseos.AgregarProducto(producto);
+                    return "Producto añadido correctamente.";
+                    }
+                }
+                for (int i = 0; i < tienda.Tecnicos.Count; i++)
+                {
+                    if (tienda.Tecnicos[i].DNI == dni)
+                    {
+                        tienda.Tecnicos[i].listaDeseos.AgregarProducto(producto);
+                        return "Producto añadido correctamente.";
+                    }
                 }
             }
-            else
-            {
-                
-            }
+            return "No se ha podido agragar el producto.";
         }
 
-        public void EliminarListaDeseos(int dni, int prod)
+        public string EliminarListaDeseos(int dni, int prod)
         {
-            // Buscar el usuario por su ID
-            Usuario usuario = BuscarUsuarioPorId(dni);
-            if (usuario != null)
+            Producto producto = tienda.BuscarProductoPorId(prod);
+            if (producto != null)
             {
-                // Buscar el producto por su ID
-                Producto producto = tienda.BuscarProductoPorId(prod);
-                if (producto != null)
+                for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
-                    // Eliminar el producto de la lista de deseos del usuario
-                    usuario.listaDeseos.EliminarProducto(producto);
+                    if (tienda.Clientes[i].DNI == dni)
+                    {
+                        tienda.Clientes[i].listaDeseos.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
                 }
-                else
+                for (int i = 0; i < tienda.Vendedores.Count; i++)
                 {
-                    
+                    if (tienda.Vendedores[i].DNI == dni)
+                    {
+                        tienda.Vendedores[i].listaDeseos.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
+                }
+                for (int i = 0; i < tienda.Tecnicos.Count; i++)
+                {
+                    if (tienda.Tecnicos[i].DNI == dni)
+                    {
+                        tienda.Tecnicos[i].listaDeseos.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
                 }
             }
-            else
-            {
-                
-            }
+            return "No se ha podido eliminar el producto.";
         }
 
-        private void ActualizarUsuarioEnTienda(Usuario usuarioActualizado)
+        //Carrito
+        public string AñadirCarrito(int dni, int prod)
         {
-            // Verificar el tipo de usuario y actualizar la lista correspondiente en la tienda
-
-            if (usuarioActualizado is Cliente)
+            Producto producto = tienda.BuscarProductoPorId(prod);
+            if (producto != null)
             {
-                Cliente clienteActualizado = usuarioActualizado as Cliente;
-                Cliente clienteEnTienda = tienda.Clientes.FirstOrDefault(c => c.DNI == clienteActualizado.DNI);
-                if (clienteEnTienda != null)
+                for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
-                    // Actualizar la información del cliente en la tienda
-                    tienda.Clientes.Remove(clienteEnTienda);
-                    tienda.Clientes.Add(clienteActualizado);
+                    if (tienda.Clientes[i].DNI == dni)
+                    {
+                        tienda.Clientes[i].carrito.AgregarProducto(producto);
+                        return "Producto añadido correctamente.";
+                    }
                 }
-                else
+                for (int i = 0; i < tienda.Vendedores.Count; i++)
                 {
-                    // Manejar el caso cuando no se encuentra el cliente
+                    if (tienda.Vendedores[i].DNI == dni)
+                    {
+                        tienda.Vendedores[i].carrito.AgregarProducto(producto);
+                        return "Producto añadido correctamente.";
+                    }
+                }
+                for (int i = 0; i < tienda.Tecnicos.Count; i++)
+                {
+                    if (tienda.Tecnicos[i].DNI == dni)
+                    {
+                        tienda.Tecnicos[i].carrito.AgregarProducto(producto);
+                        return "Producto añadido correctamente.";
+                    }
                 }
             }
-            else if (usuarioActualizado is Tecnico)
-            {
-                Tecnico tecnicoActualizado = usuarioActualizado as Tecnico;
-                Tecnico tecnicoEnTienda = tienda.Tecnicos.FirstOrDefault(t => t.DNI == tecnicoActualizado.DNI);
-                if (tecnicoEnTienda != null)
-                {
-                    // Actualizar la información del técnico en la tienda
-                    tienda.Tecnicos.Remove(tecnicoEnTienda);
-                    tienda.Tecnicos.Add(tecnicoActualizado);
-                }
-                else
-                {
-                    // Manejar el caso cuando no se encuentra el técnico
-                }
-            }
-            else if (usuarioActualizado is Vendedor)
-            {
-                Vendedor vendedorActualizado = usuarioActualizado as Vendedor;
-                Vendedor vendedorEnTienda = tienda.Vendedores.FirstOrDefault(v => v.DNI == vendedorActualizado.DNI);
-                if (vendedorEnTienda != null)
-                {
-                    // Actualizar la información del vendedor en la tienda
-                    tienda.Vendedores.Remove(vendedorEnTienda);
-                    tienda.Vendedores.Add(vendedorActualizado);
-                }
-                else
-                {
-                    // Manejar el caso cuando no se encuentra el vendedor
-                }
-            }
+            return "No se ha podido agragar el producto.";
         }
 
-
-
+        public string EliminarCarrito(int dni, int prod)
+        {
+            Producto producto = tienda.BuscarProductoPorId(prod);
+            if (producto != null)
+            {
+                for (int i = 0; i < tienda.Clientes.Count; i++)
+                {
+                    if (tienda.Clientes[i].DNI == dni)
+                    {
+                        tienda.Clientes[i].carrito.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
+                }
+                for (int i = 0; i < tienda.Vendedores.Count; i++)
+                {
+                    if (tienda.Vendedores[i].DNI == dni)
+                    {
+                        tienda.Vendedores[i].carrito.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
+                }
+                for (int i = 0; i < tienda.Tecnicos.Count; i++)
+                {
+                    if (tienda.Tecnicos[i].DNI == dni)
+                    {
+                        tienda.Tecnicos[i].carrito.EliminarProducto(producto);
+                        return "Producto eliminado correctamente.";
+                    }
+                }
+            }
+            return "No se ha podido eliminar el producto.";
+        }
 
     }
 }

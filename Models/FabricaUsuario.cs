@@ -32,7 +32,6 @@ namespace SmartTradeBackend.Models
             if (tipo == "tecnico")
             {
                 Tecnico usuario = new Tecnico(u);
-                usuario.idUsuario = ++t.ultimoIdUsuario;
                 usuario.carrito.idCarro = ++t.ultimoIdCarrito;
                 usuario.listaDeseos.idDeseos = ++t.ultimoIdDeseos;
                 t.Tecnicos.Add(usuario);

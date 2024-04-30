@@ -19,17 +19,11 @@ namespace SamartTradeBackend.Controllers
 
         //--------------------------------------------
 
+        //Productos
         [HttpGet("Todo")]
         public string GetTodo()
         {
             string respuesta = JsonConvert.SerializeObject(servicio.TodoProducto());
-            return respuesta;
-        }
-
-        [HttpGet("Buscador/{nombre}")]
-        public string GetBuscador(string nombre)
-        {
-            string respuesta = JsonConvert.SerializeObject(servicio.Buscador(nombre));
             return respuesta;
         }
 
@@ -54,17 +48,69 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
+        [HttpGet("Buscador/{nombre}")]
+        public string GetBuscador(string nombre)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.Buscador(nombre));
+            return respuesta;
+        }
+
         [HttpPatch("CrearProducto/{name}/{description}/{price}/{imagen}/{huella}/{tipo}")] 
         public string PatchCrearProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
-            servicio.AgregarProducto(name, description, price, imagenes, huella, tipo);
-            return "Producto Añadido";
+            string respuesta = JsonConvert.SerializeObject(servicio.AgregarProducto(name, description, price, imagenes, huella, tipo));
+            return respuesta;
         }
 
         [HttpPost("AgregarValoracion/{id}/{valor}")]
         public string PostAgregarValoracion(int id, int valor)
         {
             string respuesta = JsonConvert.SerializeObject(servicio.AgregarValoracion(id, valor));
+            return respuesta;
+        }
+
+        //Usuarios
+        [HttpPatch("CrearUsuario/{dni}/{nombre}/{correo}/{direccion}/{contraseña}/{tipo}")]
+        public string PatchCrearUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.AgregarUsuario(dni, nombre, correo, direccion, contraseña, tipo));
+            return respuesta;
+        }
+
+        [HttpGet("Login/{correo}/{contraseña}")]
+        public string Getlogin(string correo, string contraseña)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.Loguearse(correo, contraseña));
+            return respuesta;
+        }
+
+        //Lista deseos
+        [HttpPost("AñadirDeseado/{iduser}/{idprod}")]
+        public string PostAñadirDeseado(int iduser, int idprod)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.AñadirListaDeseos(iduser, idprod));
+            return respuesta;
+        }
+
+        [HttpPost("BorrarDeseado/{iduser}/{idprod}")]
+        public string PostBorrrarDeseado(int iduser, int idprod)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.EliminarListaDeseos(iduser, idprod));
+            return respuesta;
+        }
+
+        //Carrito
+        [HttpPost("AñadirCarrito/{iduser}/{idprod}")]
+        public string PostAñadirCarrito(int iduser, int idprod)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.AñadirCarrito(iduser, idprod));
+            return respuesta;
+        }
+
+        [HttpPost("BorrarCarrito/{iduser}/{idprod}")]
+        public string PostBorrrarCarrito(int iduser, int idprod)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.EliminarCarrito(iduser, idprod));
             return respuesta;
         }
 
