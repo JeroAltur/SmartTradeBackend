@@ -95,6 +95,12 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
+        [HttpGet("TipoUsuario/{dni}")]
+        public string GetTipoUsuario(int dni)
+        {
+            return servicio.TipoUsuario(dni);
+        }
+
         //Lista deseos
         [HttpPost("AñadirDeseado/{iduser}/{idprod}")]
         public string PostAñadirDeseado(int iduser, int idprod)

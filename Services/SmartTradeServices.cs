@@ -295,6 +295,32 @@ namespace SmartTradeBackend.Services
             return null;
         }
 
+        public string TipoUsuario(int dni)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    return "cliente";
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    return "vendedor";
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    return "tecnico";
+                }
+            }
+            return "Usuario no encontrado";
+        }
+
         //ListaDeseos
         public string AñadirListaDeseos(int dni, int prod)
         {
