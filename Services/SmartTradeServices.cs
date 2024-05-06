@@ -234,27 +234,6 @@ namespace SmartTradeBackend.Services
             return "Usuario creado con éxito.";
         }
 
-        public Usuario GetUserByMail(string correo)
-        {
-            Cliente cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo);
-            if(cliente != null)
-            {
-                return cliente
-            }
-
-            Tecnico tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo);
-            if (tecnico != null)
-            {
-                return tecnico
-            }
-
-            Vendedor vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo);
-            if (vendedor != null)
-            {
-                return vendedor
-            }
-            return null;
-        }
         /*public Usuario? Loguearse(string correo, string contraseña)
         {
             Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);

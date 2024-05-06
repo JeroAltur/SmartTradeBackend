@@ -4,7 +4,6 @@ using SmartTradeBackend.Services;
 using SamartTradeBackend;
 using SamartTradeBackend.Models.Productos;
 using SamartTradeBackend.Models.Usuarios;
-using System.Text.Json.Serialization;
 
 namespace SamartTradeBackend.Controllers
 {
@@ -76,13 +75,6 @@ namespace SamartTradeBackend.Controllers
         public string PatchCrearUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
         {
             string respuesta = JsonConvert.SerializeObject(servicio.AgregarUsuario(dni, nombre, correo, direccion, contraseña, tipo));
-            return respuesta;
-        }
-
-        [HttpGet("GetUser/{correo}")]
-        public string GetUserByMail(string correo)
-        {
-            string respuesta = JsonConvert.SerializeObject(servicio.GetUserByMail(correo));
             return respuesta;
         }
 
