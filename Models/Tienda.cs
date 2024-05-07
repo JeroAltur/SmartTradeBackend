@@ -5,23 +5,28 @@ using SamartTradeBackend.Models.Usuarios;
 using SmartTradeBackend.Models;
 using static Mysqlx.Crud.Order.Types;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net;
 
 namespace SamartTradeBackend.Models
 {
     public class Tienda
     {
+        public List<ProductoNoValidado> Productos { get; set; }
         public List<Comida> Comida { get; set; }
         public List<Electronica> Electronica { get; set; }
         public List<Ropa> Ropa { get; set; }
         public List<Cliente> Clientes {  get; set; }
         public List<Tecnico> Tecnicos { get; set;}
         public List<Vendedor> Vendedores { get; set; }
+        public int ultimoIdProductoNoValidado { get; set; }
         public int ultimoIdProducto { get; set; }
         public int ultimoIdValoracion { get; set; }
         public int ultimoIdCarrito { get; set; }
         public int ultimoIdDeseos { get; set; }
+        public int ultimoIdNotificacion { get; set; }
 
         public Tienda() { 
+            Productos = new List<ProductoNoValidado>();
             Comida = new List<Comida>();
             Electronica = new List<Electronica>();
             Ropa = new List<Ropa>();
@@ -29,10 +34,12 @@ namespace SamartTradeBackend.Models
             Tecnicos = new List<Tecnico>();
             Vendedores = new List<Vendedor>();
 
+            ultimoIdProductoNoValidado = 0;
             ultimoIdProducto = 0;
             ultimoIdValoracion = 0;
             ultimoIdCarrito = 0;
             ultimoIdDeseos = 0;
+            ultimoIdNotificacion = 0;
 
             IniciarObjetos();
         
@@ -128,10 +135,36 @@ namespace SamartTradeBackend.Models
             fu.crearUsuario(cliente, "cliente", this);
 
             Usuario vendedor = new Usuario(73965328, "Pep", "pep@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 26", "contaseña");
+            ProductosPep();
             fu.crearUsuario(vendedor, "vendedor", this);
 
             Usuario tecnico = new Usuario(73365312, "Paco", "paco@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 33", "contaseña");
             fu.crearUsuario(tecnico, "tecnico", this);
         }
+
+        /*public void ProductosPep()
+        {
+            for (int i = 0; i < this.Clientes.Count; i++)
+            {
+                if (this.Clientes[i].DNI == dni)
+                {
+                    return "cliente";
+                }
+            }
+            for (int i = 0; i < this.Vendedores.Count; i++)
+            {
+                if (this.Vendedores[i].DNI == dni)
+                {
+                    return "vendedor";
+                }
+            }
+            for (int i = 0; i < this.Tecnicos.Count; i++)
+            {
+                if (this.Tecnicos[i].DNI == dni)
+                {
+                    return "tecnico";
+                }
+            }
+        }*/
     }
 }

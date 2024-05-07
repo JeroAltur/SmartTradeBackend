@@ -10,7 +10,7 @@ namespace SmartTradeBackend.Models
         {
             
         }
-        public void crearProducto(Producto p, string tipo, Tienda t)
+        public Producto crearProducto(Producto p, string tipo, Tienda t)
         {
             if (tipo == "ropa")
             {
@@ -18,6 +18,7 @@ namespace SmartTradeBackend.Models
                 nuevoProducto.idProducto = ++t.ultimoIdProducto;
                 nuevoProducto.valoracion.idValoracion = ++t.ultimoIdValoracion;
                 t.Ropa.Add(nuevoProducto);
+                return nuevoProducto;
             }
             if (tipo == "comida")
             {
@@ -25,6 +26,7 @@ namespace SmartTradeBackend.Models
                 nuevoProducto.idProducto = ++t.ultimoIdProducto;
                 nuevoProducto.valoracion.idValoracion = ++t.ultimoIdValoracion;
                 t.Comida.Add(nuevoProducto);
+                return nuevoProducto;
             }
             if (tipo == "electronica")
             {
@@ -32,7 +34,9 @@ namespace SmartTradeBackend.Models
                 nuevoProducto.idProducto = ++t.ultimoIdProducto;
                 nuevoProducto.valoracion.idValoracion = ++t.ultimoIdValoracion;
                 t.Electronica.Add(nuevoProducto);
+                return nuevoProducto;
             }
+            return null;
         }
 
         //public FabricaProducto() { }

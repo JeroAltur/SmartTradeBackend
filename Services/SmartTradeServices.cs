@@ -7,6 +7,7 @@ using SmartTradeBackend.Models;
 using System.IO.Pipelines;
 using System.Net;
 using System.Resources;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SmartTradeBackend.Services
 {
@@ -100,13 +101,60 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
-        //No va be
-        public string AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
+        public string SolicitarProducto(string nombre, string descripcion, double precio, string imagenes, double huellaAmbiental, string tipo, int dni)
+        {
+            if (tipo != "ropa" && tipo != "comida" && tipo != "electronica")
+            {
+                return "Tipo de producto no válido.";
+            }
+
+            Vendedor vendedor = new Vendedor();
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    vendedor = tienda.Vendedores[i];
+                }
+            }
+
+            ProductoNoValidado productoNoValidado = new ProductoNoValidado(nombre, descripcion, precio, imagenes, huellaAmbiental, tipo, vendedor);
+            productoNoValidado.idProductoN = ++tienda.ultimoIdProductoNoValidado;
+            tienda.Productos.Add(productoNoValidado);
+
+            return "Venta de producto solicitada correctamente";
+        }
+
+        public string AceptarProducto(int id)
+        {
+            ProductoNoValidado p = new ProductoNoValidado();
+            for (int i = 0; i < tienda.Productos.Count; i++)
+            {
+                if (tienda.Productos[i].idProductoN == id)
+                {
+                    p = tienda.Productos[i];
+                    tienda.Productos.Remove(p);
+                }
+            }
+
+            Producto prod = AgregarProducto(p.nombre, p.descripcion, p.precio, p.imagenes, p.HuellaAmbiental, p.tipo);
+
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == p.Vendedor.DNI)
+                {
+                    tienda.Vendedores[i].productos.Add(prod);
+                }
+            }
+
+            return "Producto agregado correctamente";
+        }
+
+        public Producto AgregarProducto(string name, string description, double price, string imagenes, double huella, string tipo)
         {
             // Comprobar tipo de producto
             if (tipo != "ropa" && tipo != "comida" && tipo != "electronica")
             {
-                return "Tipo de producto no válido.";
+                return null;
             }
 
             // Asignar imágenes predeterminadas si imagenes es null o vacío
@@ -120,9 +168,9 @@ namespace SmartTradeBackend.Services
             // Crear el producto
             Producto p = new Producto(name, description, price, imagenes, huella);
             FabricaProducto fabricaProducto = new FabricaProducto();
-            fabricaProducto.crearProducto(p, tipo, tienda);
+            p = fabricaProducto.crearProducto(p, tipo, tienda);
 
-            return "Producto creado correctamente";
+            return p;
         }
 
         public string AgregarValoracion(int idProd, int v)
@@ -186,7 +234,6 @@ namespace SmartTradeBackend.Services
 
 
         //Usuarios
-        //No va be
         public string AgregarUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
         {
             //comprobar tipo
@@ -234,32 +281,6 @@ namespace SmartTradeBackend.Services
             return "Usuario creado con éxito.";
         }
 
-        /*public Usuario? Loguearse(string correo, string contraseña)
-        {
-            Cliente? cliente = tienda.Clientes.FirstOrDefault(c => c.correo == correo && c.contraseña == contraseña);
-            if (cliente != null)
-            {
-                return cliente;
-            }
-
-            // Buscar en la lista de técnicos
-            Tecnico? tecnico = tienda.Tecnicos.FirstOrDefault(t => t.correo == correo && t.contraseña == contraseña);
-            if (tecnico != null)
-            {
-                return tecnico;
-            }
-
-            // Buscar en la lista de vendedores
-            Vendedor? vendedor = tienda.Vendedores.FirstOrDefault(v => v.correo == correo && v.contraseña == contraseña);
-            if (vendedor != null)
-            {
-                return vendedor;
-            }
-
-            return null;
-        }*/
-
-        //No va be
         public Usuario? Loguearse(string correo, string contraseña)
         {
             for (int i = 0; i < tienda.Clientes.Count; i++)

@@ -21,6 +21,7 @@ namespace SamartTradeBackend.Models.Usuarios
             contraseña = u.contraseña;
             carrito = u.carrito;
             listaDeseos = u.listaDeseos;
+            notificaciones = u.notificaciones;
         }
     }
 }
