@@ -41,6 +41,11 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
+        public List<ProductoNoValidado> TodoPorValidar()
+        {
+            return tienda.Productos;
+        }
+
         public List<Producto> Tendencias()
         {
             List<Producto> resultadoProvicional = TodoProducto();
@@ -195,43 +200,6 @@ namespace SmartTradeBackend.Services
                 return "El producto con la ID " + idProd + " no fue encontrado en la tienda.";
             }
         }
-
-        private void ActualizarProductoEnTienda(Producto productoActualizado)
-        {
-            
-            // Buscar el producto dentro de la tienda
-            var comida = tienda.Comida.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
-            if (comida != null)
-            {
-                var productoActualizar = conversor.toComida(productoActualizado);
-                // Actualizar el producto dentro de la lista de Comida
-                tienda.Comida.Remove(comida);
-                tienda.Comida.Add(productoActualizar);
-                return;
-            }
-
-            var electronica = tienda.Electronica.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
-            if (electronica != null)
-            {
-                var productoActualizar = conversor.toElectronica(productoActualizado);
-                // Actualizar el producto dentro de la lista de Electronica
-                tienda.Electronica.Remove(electronica);
-                tienda.Electronica.Add(productoActualizar);
-                return;
-            }
-
-            var ropa = tienda.Ropa.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
-            if (ropa != null)
-            {
-                var productoActualizar = conversor.toRopa(productoActualizado);
-                // Actualizar el producto dentro de la lista de Ropa
-                tienda.Ropa.Remove(ropa);
-                tienda.Ropa.Add(productoActualizar);
-                return;
-            }
-        }
-
-
 
         //Usuarios
         public string AgregarUsuario(int dni, string nombre, string correo, string direccion, string contraseña, string tipo)
@@ -474,6 +442,96 @@ namespace SmartTradeBackend.Services
                 }
             }
             return "No se ha podido eliminar el producto.";
+        }
+
+        //Pedidos
+        public string RealizarPedido(int dni)
+        {
+            Pedidos pedidos = new Pedidos();
+
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    pedidos.idPedidos = ++tienda.ultimoIdPedido;
+                    for (int j = 0; j < tienda.Clientes[i].carrito.productos.Count; j++)
+                    {
+                        pedidos.AñadirProducto(tienda.Clientes[i].carrito.productos[j]);
+                    }
+                    tienda.Clientes[i].carrito.productos.Clear();
+                    tienda.Clientes[i].carrito.precio = 0;
+                    tienda.Clientes[i].pedidos.Add(pedidos);
+                    return "Pedido realizado con exito";
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    pedidos.idPedidos = ++tienda.ultimoIdPedido;
+                    for (int j = 0; j < tienda.Vendedores[i].carrito.productos.Count; j++)
+                    {
+                        pedidos.AñadirProducto(tienda.Vendedores[i].carrito.productos[j]);
+                    }
+                    tienda.Vendedores[i].carrito.productos.Clear();
+                    tienda.Vendedores[i].carrito.precio = 0;
+                    tienda.Vendedores[i].pedidos.Add(pedidos);
+                    return "Pedido realizado con exito";
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    pedidos.idPedidos = ++tienda.ultimoIdPedido;
+                    for (int j = 0; j < tienda.Tecnicos[i].carrito.productos.Count; j++)
+                    {
+                        pedidos.AñadirProducto(tienda.Tecnicos[i].carrito.productos[j]);
+                    }
+                    tienda.Tecnicos[i].carrito.productos.Clear();
+                    tienda.Tecnicos[i].carrito.precio = 0;
+                    tienda.Tecnicos[i].pedidos.Add(pedidos);
+                    return "Pedido realizado con exito";
+                }
+            }
+
+            return "No se ha podido realizar el pedido";
+        }
+
+        //Auxiliars
+        private void ActualizarProductoEnTienda(Producto productoActualizado)
+        {
+
+            // Buscar el producto dentro de la tienda
+            var comida = tienda.Comida.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
+            if (comida != null)
+            {
+                var productoActualizar = conversor.toComida(productoActualizado);
+                // Actualizar el producto dentro de la lista de Comida
+                tienda.Comida.Remove(comida);
+                tienda.Comida.Add(productoActualizar);
+                return;
+            }
+
+            var electronica = tienda.Electronica.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
+            if (electronica != null)
+            {
+                var productoActualizar = conversor.toElectronica(productoActualizado);
+                // Actualizar el producto dentro de la lista de Electronica
+                tienda.Electronica.Remove(electronica);
+                tienda.Electronica.Add(productoActualizar);
+                return;
+            }
+
+            var ropa = tienda.Ropa.FirstOrDefault(p => p.idProducto == productoActualizado.idProducto);
+            if (ropa != null)
+            {
+                var productoActualizar = conversor.toRopa(productoActualizado);
+                // Actualizar el producto dentro de la lista de Ropa
+                tienda.Ropa.Remove(ropa);
+                tienda.Ropa.Add(productoActualizar);
+                return;
+            }
         }
 
         //CosasProbar

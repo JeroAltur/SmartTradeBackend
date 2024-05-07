@@ -20,6 +20,7 @@ namespace SamartTradeBackend.Models.Usuarios
             carrito = u.carrito;
             listaDeseos = u.listaDeseos;
             notificaciones = u.notificaciones;
+            pedidos = u.pedidos;
         }
     }
 }

@@ -24,6 +24,7 @@ namespace SamartTradeBackend.Models
         public int ultimoIdCarrito { get; set; }
         public int ultimoIdDeseos { get; set; }
         public int ultimoIdNotificacion { get; set; }
+        public int ultimoIdPedido { get; set; }
 
         public Tienda() { 
             Productos = new List<ProductoNoValidado>();
@@ -40,6 +41,7 @@ namespace SamartTradeBackend.Models
             ultimoIdCarrito = 0;
             ultimoIdDeseos = 0;
             ultimoIdNotificacion = 0;
+            ultimoIdPedido = 0;
 
             IniciarObjetos();
         
