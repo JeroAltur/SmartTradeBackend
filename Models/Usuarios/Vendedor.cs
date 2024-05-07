@@ -1,14 +1,16 @@
 ﻿using SamartTradeBackend.Models.CarroCompras;
 using SamartTradeBackend.Models.ListaDeseos;
 using SamartTradeBackend.Models.Usuarios;
+using SamartTradeBackend.Models.Productos;
 using SmartTradeBackend.Services;
 
 namespace SamartTradeBackend.Models.Usuarios
 {
     public class Vendedor: Usuario
     {
+        public List<Producto> productos { get; set; }
 
-        public Vendedor() { }
+        public Vendedor() { productos = new List<Producto>(); }
 
         public Vendedor(Usuario u)
         {
