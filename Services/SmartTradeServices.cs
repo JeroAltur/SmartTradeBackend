@@ -498,6 +498,128 @@ namespace SmartTradeBackend.Services
             return "No se ha podido realizar el pedido";
         }
 
+        //Notificacion
+        public void CrearNotificacion(int dni, string titulo, string descripcion)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    Notificaciones notificacion = new Notificaciones(titulo, descripcion);
+                    notificacion.idNotificacion = ++tienda.ultimoIdNotificacion;
+                    tienda.Clientes[i].notificaciones.Add(notificacion);
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    Notificaciones notificacion = new Notificaciones(titulo, descripcion);
+                    notificacion.idNotificacion = ++tienda.ultimoIdNotificacion;
+                    tienda.Vendedores[i].notificaciones.Add(notificacion);
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    Notificaciones notificacion = new Notificaciones(titulo, descripcion);
+                    notificacion.idNotificacion = ++tienda.ultimoIdNotificacion;
+                    tienda.Tecnicos[i].notificaciones.Add(notificacion);
+                }
+            }
+        }
+
+        public void LeerNotificacion(int dni, int id)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Clientes[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Clientes[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Clientes[i].notificaciones[j].leido = true;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Vendedores[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Vendedores[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Vendedores[i].notificaciones[j].leido = true;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Tecnicos[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Tecnicos[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Tecnicos[i].notificaciones[j].leido = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public string BorrarNotificacion(int dni, int id)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Clientes[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Clientes[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Clientes[i].notificaciones.Remove(tienda.Clientes[i].notificaciones[j]);
+                            return "Notificacion borrada con exito.";
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Vendedores[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Vendedores[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Vendedores[i].notificaciones.Remove(tienda.Vendedores[i].notificaciones[j]);
+                            return "Notificacion borrada con exito.";
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    for (int j = 0; j < tienda.Tecnicos[i].notificaciones.Count; j++)
+                    {
+                        if (tienda.Tecnicos[i].notificaciones[j].idNotificacion == id)
+                        {
+                            tienda.Tecnicos[i].notificaciones.Remove(tienda.Tecnicos[i].notificaciones[j]);
+                            return "Notificacion borrada con exito.";
+                        }
+                    }
+                }
+            }
+            return "No se ha podido borrar la notificacion.";
+        }
+
         //Auxiliars
         private void ActualizarProductoEnTienda(Producto productoActualizado)
         {

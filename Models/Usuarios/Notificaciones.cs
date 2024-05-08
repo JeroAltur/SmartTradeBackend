@@ -5,8 +5,9 @@
         public int idNotificacion {  get; set; }
         public string titulo {  get; set; }
         public string descripcion { get; set;}
+        public bool leido { get; set; }
 
-        public Notificaciones() { }
+        public Notificaciones() { leido = false; }
 
         public Notificaciones(string titulo, string descripcion)
         {
