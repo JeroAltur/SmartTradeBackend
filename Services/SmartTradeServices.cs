@@ -143,13 +143,13 @@ namespace SmartTradeBackend.Services
 
             Producto prod = AgregarProducto(p.nombre, p.descripcion, p.precio, p.imagenes, p.HuellaAmbiental, p.tipo);
 
-            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            /*for (int i = 0; i < tienda.Vendedores.Count; i++)
             {
                 if (tienda.Vendedores[i].DNI == p.Vendedor.DNI)
                 {
                     tienda.Vendedores[i].productos.Add(prod);
                 }
-            }
+            }*/
 
             return "Producto agregado correctamente";
         }

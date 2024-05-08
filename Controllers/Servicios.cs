@@ -204,8 +204,8 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
-        [HttpPatch("CrearUsuario/{dni}/{titulo}/{descripcion}")]
-        public string PatchCrearUsuario(int dni, string titulo, string descripcion)
+        [HttpPatch("CrearNotificacion/{dni}/{titulo}/{descripcion}")]
+        public string PatchCrearNotificacion(int dni, string titulo, string descripcion)
         {
             servicio.CrearNotificacion(dni, titulo, descripcion);
             return "Notificacion creada";
