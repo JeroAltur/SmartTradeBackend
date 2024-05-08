@@ -498,6 +498,32 @@ namespace SmartTradeBackend.Services
             return "No se ha podido realizar el pedido";
         }
 
+        public List<Pedidos> ListaPedidos(int dni)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    return tienda.Clientes[i].pedidos;
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    return tienda.Vendedores[i].pedidos;
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    return tienda.Tecnicos[i].pedidos;
+                }
+            }
+            return null;
+        }
+
         //Notificacion
         public void CrearNotificacion(int dni, string titulo, string descripcion)
         {
@@ -618,6 +644,32 @@ namespace SmartTradeBackend.Services
                 }
             }
             return "No se ha podido borrar la notificacion.";
+        }
+
+        public List<Notificaciones> ListaNotificaciones(int dni)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    return tienda.Clientes[i].notificaciones;
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    return tienda.Vendedores[i].notificaciones;
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    return tienda.Tecnicos[i].notificaciones;
+                }
+            }
+            return null;
         }
 
         //Auxiliars

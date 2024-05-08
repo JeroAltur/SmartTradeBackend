@@ -137,7 +137,6 @@ namespace SamartTradeBackend.Models
             fu.crearUsuario(cliente, "cliente", this);
 
             Usuario vendedor = new Usuario(73965328, "Pep", "pep@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 26", "contaseña");
-            ProductosPep();
             fu.crearUsuario(vendedor, "vendedor", this);
 
             Usuario tecnico = new Usuario(73365312, "Paco", "paco@gmail.com", "Comunitat Valenciana, Valencis, C/Ausias March 33", "contaseña");
