@@ -11,7 +11,7 @@ namespace SamartTradeBackend.Models.Productos
         public string imagenes { get; set; }
         public double HuellaAmbiental { get; set; }
         public string tipo { get; set; }
-        public Vendedor Vendedor { get; set; }
+        public Usuario Vendedor { get; set; }
 
         public ProductoNoValidado()
         {
