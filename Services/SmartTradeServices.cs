@@ -113,7 +113,7 @@ namespace SmartTradeBackend.Services
                 return "Tipo de producto no válido.";
             }
 
-            Vendedor vendedor = new Vendedor();
+            Usuario vendedor = new Usuario();
             for (int i = 0; i < tienda.Vendedores.Count; i++)
             {
                 if (tienda.Vendedores[i].DNI == dni)
