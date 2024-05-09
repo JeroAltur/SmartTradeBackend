@@ -19,7 +19,7 @@ namespace SamartTradeBackend.Models.Productos
             HuellaAmbiental = 0;
         }
 
-        public ProductoNoValidado(string nombre, string descripcion, double precio, string imagenes, double huellaAmbiental, string tipo,Vendedor vendedor) : this()
+        public ProductoNoValidado(string nombre, string descripcion, double precio, string imagenes, double huellaAmbiental, string tipo,Usuario vendedor) : this()
         {
             this.nombre = nombre;
             this.descripcion = descripcion;
