@@ -13,8 +13,7 @@ namespace SamartTradeBackend.Models.Usuarios
         {
             productos = new List<Producto>();
             precio = 0;
-            llegada = DateTime.Now;
-            llegada.AddDays(3);
+            llegada = DateTime.Now.AddDays(3);
         }
 
         public void AñadirProducto(Producto p)

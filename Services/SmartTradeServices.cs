@@ -9,6 +9,7 @@ using System.IO.Pipelines;
 using System.Net;
 using System.Resources;
 using System.Security.Cryptography.X509Certificates;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SmartTradeBackend.Services
 {
@@ -91,7 +92,7 @@ namespace SmartTradeBackend.Services
             return result;
         }
 
-        public List<Producto> Buscador(String valor)
+        public List<Producto> Buscador(string valor)
         {
             List<Producto> resultadoProvicional = TodoProducto();
             List<Producto> result = new List<Producto>();
@@ -127,6 +128,8 @@ namespace SmartTradeBackend.Services
             productoNoValidado.idProductoN = ++tienda.ultimoIdProductoNoValidado;
             tienda.Productos.Add(productoNoValidado);
 
+            CrearNotificacion(dni, "Producto solicitado", "Tu producto: " + nombre + ", ha sido enviado a solicitud de ventas.");
+
             return "Venta de producto solicitada correctamente";
         }
 
@@ -143,6 +146,8 @@ namespace SmartTradeBackend.Services
             }
 
             Producto prod = AgregarProducto(p.nombre, p.descripcion, p.precio, p.imagenes, p.HuellaAmbiental, p.tipo);
+
+            CrearNotificacion(p.Vendedor.DNI, "Producto aceptado", "Tu producto: " + p.nombre + ", ha sido aceptado para venta.");
 
             /*for (int i = 0; i < tienda.Vendedores.Count; i++)
             {
@@ -246,7 +251,8 @@ namespace SmartTradeBackend.Services
 
             Usuario usuario = new Usuario(dni, nombre, correo, direccion, contraseña);
             FabricaUsuario fabricaUsuario = new FabricaUsuario();
-            fabricaUsuario.crearUsuario(usuario, tipo, tienda); 
+            fabricaUsuario.crearUsuario(usuario, tipo, tienda);
+            CrearNotificacion(dni, "Nuevo Usuario", "Gracias por registrarte en nuestra aplicacion, esperamos que disfrute su experiencia.");
             return "Usuario creado con éxito.";
         }
 
@@ -258,6 +264,7 @@ namespace SmartTradeBackend.Services
                 {
                     if (tienda.Clientes[i].contraseña == contraseña)
                     {
+                        CrearNotificacion(tienda.Clientes[i].DNI, "Nuevo Inicio de Sesion", "Se ha iniciado sesion a las " + DateTime.Now);
                         return tienda.Clientes[i];
                     }
                 }
@@ -266,9 +273,10 @@ namespace SmartTradeBackend.Services
             {
                 if (tienda.Vendedores[i].correo == correo)
                 {
-                    if(tienda.Clientes[i].contraseña == contraseña)
+                    if(tienda.Vendedores[i].contraseña == contraseña)
                     {
-                        return tienda.Clientes[i];
+                        CrearNotificacion(tienda.Vendedores[i].DNI, "Nuevo Inicio de Sesion", "Se ha iniciado sesion a las " + DateTime.Now);
+                        return tienda.Vendedores[i];
                     }
                 }
             }
@@ -276,9 +284,10 @@ namespace SmartTradeBackend.Services
             {
                 if (tienda.Tecnicos[i].correo == correo)
                 {
-                    if (tienda.Clientes[i].contraseña == contraseña)
+                    if (tienda.Tecnicos[i].contraseña == contraseña)
                     {
-                        return tienda.Clientes[i];
+                        CrearNotificacion(tienda.Tecnicos[i].DNI, "Nuevo Inicio de Sesion", "Se ha iniciado sesion a las " + DateTime.Now);
+                        return tienda.Tecnicos[i];
                     }
                 }
             }
@@ -317,6 +326,7 @@ namespace SmartTradeBackend.Services
             Producto producto = tienda.BuscarProductoPorId(prod);
             if (producto != null)
             {
+                CrearNotificacion(dni, "Producto agregado a deseos", "Producto: " + producto.nombre + ", ha sido añadido a su lista de deseos.");
                 for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
                     if (tienda.Clientes[i].DNI == dni)
@@ -350,6 +360,7 @@ namespace SmartTradeBackend.Services
             Producto producto = tienda.BuscarProductoPorId(prod);
             if (producto != null)
             {
+                CrearNotificacion(dni, "Producto eliminado de deseos", "Producto: " + producto.nombre + ", ha sido eliminado de su lista de deseos.");
                 for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
                     if (tienda.Clientes[i].DNI == dni)
@@ -410,6 +421,7 @@ namespace SmartTradeBackend.Services
             Producto producto = tienda.BuscarProductoPorId(prod);
             if (producto != null)
             {
+                CrearNotificacion(dni, "Producto agregado al carrito", "Producto: " + producto.nombre + ", ha sido añadido a su carrito de la compra.");
                 for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
                     if (tienda.Clientes[i].DNI == dni)
@@ -443,6 +455,7 @@ namespace SmartTradeBackend.Services
             Producto producto = tienda.BuscarProductoPorId(prod);
             if (producto != null)
             {
+                CrearNotificacion(dni, "Producto eliminado de carrito", "Producto: " + producto.nombre + ", ha sido eliminado de su carrito de la compra.");
                 for (int i = 0; i < tienda.Clientes.Count; i++)
                 {
                     if (tienda.Clientes[i].DNI == dni)
@@ -501,6 +514,8 @@ namespace SmartTradeBackend.Services
         public string RealizarPedido(int dni)
         {
             Pedidos pedidos = new Pedidos();
+
+            CrearNotificacion(dni, "Pedido realizado", "Su pedido ha sido realizado, y llegara en un plazo de 3 dias. Disfrute de su compra.");
 
             for (int i = 0; i < tienda.Clientes.Count; i++)
             {
