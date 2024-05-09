@@ -1,5 +1,6 @@
 ﻿using SamartTradeBackend;
 using SamartTradeBackend.Models;
+using SamartTradeBackend.Models.CarroCompras;
 using SamartTradeBackend.Models.ListaDeseos;
 using SamartTradeBackend.Models.Productos;
 using SamartTradeBackend.Models.Usuarios;
@@ -377,6 +378,32 @@ namespace SmartTradeBackend.Services
             return "No se ha podido eliminar el producto.";
         }
 
+        public Deseos Deseos(int dni)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    return tienda.Clientes[i].listaDeseos;
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    return tienda.Vendedores[i].listaDeseos;
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    return tienda.Tecnicos[i].listaDeseos;
+                }
+            }
+            return null;
+        }
+
         //Carrito
         public string AñadirCarrito(int dni, int prod)
         {
@@ -442,6 +469,32 @@ namespace SmartTradeBackend.Services
                 }
             }
             return "No se ha podido eliminar el producto.";
+        }
+
+        public CarroCompra Carrito(int dni)
+        {
+            for (int i = 0; i < tienda.Clientes.Count; i++)
+            {
+                if (tienda.Clientes[i].DNI == dni)
+                {
+                    return tienda.Clientes[i].carrito;
+                }
+            }
+            for (int i = 0; i < tienda.Vendedores.Count; i++)
+            {
+                if (tienda.Vendedores[i].DNI == dni)
+                {
+                    return tienda.Vendedores[i].carrito;
+                }
+            }
+            for (int i = 0; i < tienda.Tecnicos.Count; i++)
+            {
+                if (tienda.Tecnicos[i].DNI == dni)
+                {
+                    return tienda.Tecnicos[i].carrito;
+                }
+            }
+            return null;
         }
 
         //Pedidos

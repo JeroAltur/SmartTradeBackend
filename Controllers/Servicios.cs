@@ -130,6 +130,13 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
+        [HttpGet("Deseos/{iduser}")]
+        public string GetDeseos(int iduser)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.Deseos(iduser));
+            return respuesta;
+        }
+
         //Carrito
         [HttpPost("AñadirCarrito/{iduser}/{idprod}")]
         public string PostAñadirCarrito(int iduser, int idprod)
@@ -142,6 +149,13 @@ namespace SamartTradeBackend.Controllers
         public string PostBorrrarCarrito(int iduser, int idprod)
         {
             string respuesta = JsonConvert.SerializeObject(servicio.EliminarCarrito(iduser, idprod));
+            return respuesta;
+        }
+
+        [HttpGet("Carrito/{iduser}")]
+        public string GetCarrito(int iduser)
+        {
+            string respuesta = JsonConvert.SerializeObject(servicio.Carrito(iduser));
             return respuesta;
         }
 
