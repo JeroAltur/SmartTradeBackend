@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamartTradeBackend", "SamartTradeBackend.csproj", "{9A60FAF0-7E9D-4E5E-928F-AE75F6988EF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBackend", "..\TestBackend\TestBackend.csproj", "{0E6E2A8B-8062-446E-B767-799FC54356FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBackend", "..\TestBackend\TestBackend.csproj", "{0E6E2A8B-8062-446E-B767-799FC54356FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
