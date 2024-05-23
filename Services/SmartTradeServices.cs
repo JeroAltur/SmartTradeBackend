@@ -15,7 +15,7 @@ namespace SmartTradeBackend.Services
 {
     public class SmartTradeServices
     {
-        Tienda tienda;
+        public Tienda tienda;
         ConversorDeTipos conversor = new ConversorDeTipos();
 
         public SmartTradeServices()
@@ -61,34 +61,6 @@ namespace SmartTradeBackend.Services
             List<Producto> resultadoProvicional = TodoProducto();
 
             List<Producto> result = resultadoProvicional.OrderByDescending(p => p.valoracion.valor).Take(8).ToList();
-            return result;
-        }
-
-        public List<Producto> CompradosPorIronman()
-        {
-            List<Producto> resultadoProvicional = new List<Producto>();
-            List<Producto> result = new List<Producto>();
-            resultadoProvicional = Buscador("Iphone15");
-            foreach (Producto p in resultadoProvicional)
-            {
-                result.Add(p);
-            }
-            resultadoProvicional = Buscador("Sudadera supreme");
-            foreach (Producto p in resultadoProvicional)
-            {
-                result.Add(p);
-            }
-            resultadoProvicional = Buscador("teclado");
-            foreach (Producto p in resultadoProvicional)
-            {
-                result.Add(p);
-            }
-            resultadoProvicional = Buscador("Manzana");
-            foreach (Producto p in resultadoProvicional)
-            {
-                result.Add(p);
-            }
-
             return result;
         }
 

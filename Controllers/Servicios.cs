@@ -49,13 +49,6 @@ namespace SamartTradeBackend.Controllers
             return respuesta;
         }
 
-        [HttpGet("CompradosIronman")]
-        public string GetCompradosIronman()
-        {
-            string respuesta = JsonConvert.SerializeObject(servicio.CompradosPorIronman());
-            return respuesta;
-        }
-
         [HttpGet("Buscador/{nombre}")]
         public string GetBuscador(string nombre)
         {
