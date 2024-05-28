@@ -1,14 +1,9 @@
-using SmartTradeBackend.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Register Servicios as a singleton
-builder.Services.AddSingleton<SmartTradeServices>();
 
 var app = builder.Build();
 

@@ -15,12 +15,33 @@ namespace SmartTradeBackend.Services
 {
     public class SmartTradeServices
     {
+        private static SmartTradeServices _instance;
+        private static readonly object _lock = new object();
         public Tienda tienda;
         ConversorDeTipos conversor = new ConversorDeTipos();
 
         public SmartTradeServices()
         {
             tienda = new Tienda();
+        }
+
+        public static SmartTradeServices Instance
+        {
+            get
+            {
+                // Doble comprobación para la creación de la instancia
+                if (_instance == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new SmartTradeServices();
+                        }
+                    }
+                }
+                return _instance;
+            }
         }
 
         //Productos

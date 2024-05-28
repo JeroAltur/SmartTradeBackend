@@ -13,9 +13,9 @@ namespace SamartTradeBackend.Controllers
     {
         private readonly SmartTradeServices servicio;
 
-        public Servicios(SmartTradeServices serviciobase)
+        public Servicios()
         {
-            servicio = serviciobase;
+            servicio = SmartTradeServices.Instance; ;
         }
 
         //--------------------------------------------
