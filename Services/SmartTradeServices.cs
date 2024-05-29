@@ -20,7 +20,7 @@ namespace SmartTradeBackend.Services
         public Tienda tienda;
         ConversorDeTipos conversor = new ConversorDeTipos();
 
-        public SmartTradeServices()
+        private SmartTradeServices()
         {
             tienda = new Tienda();
         }
