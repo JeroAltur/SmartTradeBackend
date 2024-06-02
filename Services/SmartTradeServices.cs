@@ -108,6 +108,8 @@ namespace SmartTradeBackend.Services
                 return "Tipo de producto no válido.";
             }
 
+            string imagen = CambiarProrcentajeBarra(imagenes);
+
             Usuario vendedor = new Usuario();
             for (int i = 0; i < tienda.Vendedores.Count; i++)
             {
@@ -117,7 +119,7 @@ namespace SmartTradeBackend.Services
                 }
             }
 
-            ProductoNoValidado productoNoValidado = new ProductoNoValidado(nombre, descripcion, precio, imagenes, huellaAmbiental, tipo, vendedor);
+            ProductoNoValidado productoNoValidado = new ProductoNoValidado(nombre, descripcion, precio, imagen, huellaAmbiental, tipo, vendedor);
             productoNoValidado.idProductoN = ++tienda.ultimoIdProductoNoValidado;
             tienda.Productos.Add(productoNoValidado);
 
@@ -789,6 +791,10 @@ namespace SmartTradeBackend.Services
             List<Tecnico>? lista = new List<Tecnico>();
             lista = tienda.Tecnicos;
             return lista;
+        }
+
+        public string CambiarProrcentajeBarra(string input) {
+            if (input == null) { throw new ArgumentNullException(nameof(input)); } return input.Replace('%', '/'); 
         }
 
     }
