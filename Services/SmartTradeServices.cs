@@ -108,7 +108,7 @@ namespace SmartTradeBackend.Services
                 return "Tipo de producto no válido.";
             }
 
-            string imagen = CambiarProrcentajeBarra(imagenes);
+            string imagen = Uri.UnescapeDataString(imagenes); ;
 
             Usuario vendedor = new Usuario();
             for (int i = 0; i < tienda.Vendedores.Count; i++)
