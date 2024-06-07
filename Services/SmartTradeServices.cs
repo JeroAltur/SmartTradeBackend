@@ -144,14 +144,6 @@ namespace SmartTradeBackend.Services
 
             CrearNotificacion(p.Vendedor.DNI, "Producto aceptado", "Tu producto: " + p.nombre + ", ha sido aceptado para venta.");
 
-            /*for (int i = 0; i < tienda.Vendedores.Count; i++)
-            {
-                if (tienda.Vendedores[i].DNI == p.Vendedor.DNI)
-                {
-                    tienda.Vendedores[i].productos.Add(prod);
-                }
-            }*/
-
             return "Producto agregado correctamente";
         }
 
