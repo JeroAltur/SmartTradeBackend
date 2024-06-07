@@ -203,38 +203,17 @@ namespace SmartTradeBackend.Services
                 return "Tipo de usuario no valido.";
             }
 
-            //Comprobar clientes
-            if (tienda.Clientes.Any(cliente => cliente.DNI == dni))
+            //Comprobar usuarios
+            if (tienda.Clientes.Any(cliente => cliente.DNI == dni) || tienda.Vendedores.Any(cliente => cliente.DNI == dni) || tienda.Tecnicos.Any(cliente => cliente.DNI == dni))
             {
                 return "Error: Ya existe un usuario con el mismo DNI.";
             }
 
-            if (tienda.Clientes.Any(cliente => cliente.correo == correo))
+            if (tienda.Clientes.Any(cliente => cliente.correo == correo) || tienda.Vendedores.Any(cliente => cliente.correo == correo) || tienda.Tecnicos.Any(cliente => cliente.correo == correo))
             {
                 return "Error: Ya existe un usuario con el mismo correo electrónico.";
             }
 
-            //Comprobar vendedores
-            if (tienda.Vendedores.Any(cliente => cliente.DNI == dni))
-            {
-                return "Error: Ya existe un usuario con el mismo DNI.";
-            }
-
-            if (tienda.Vendedores.Any(cliente => cliente.correo == correo))
-            {
-                return "Error: Ya existe un usuario con el mismo correo electrónico.";
-            }
-
-            //Comprobar tecnicos
-            if (tienda.Tecnicos.Any(cliente => cliente.DNI == dni))
-            {
-                return "Error: Ya existe un usuario con el mismo DNI.";
-            }
-
-            if (tienda.Tecnicos.Any(cliente => cliente.correo == correo))
-            {
-                return "Error: Ya existe un usuario con el mismo correo electrónico.";
-            }
 
             Usuario usuario = new Usuario(dni, nombre, correo, direccion, contraseña);
             FabricaUsuario fabricaUsuario = new FabricaUsuario();
